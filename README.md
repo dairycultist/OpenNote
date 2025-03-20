@@ -8,3 +8,4 @@ cohost but beter
   - allow users to post as much text as they wanted and include (limited) HTML/CSS
   - image uploading
   - dont run ads
+- reporting system once no longer invite-only
