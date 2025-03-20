@@ -12,7 +12,7 @@
             --accent: #835ffa;
         }
         
-        body { font-family: "Roboto", sans-serif; color: #222; display: flex; justify-content: center; align-items: flex-start; gap: 1em; }
+        body { font-family: "Roboto", sans-serif; color: #222; display: flex; justify-content: center; align-items: flex-start; gap: 2em; }
         hr { border: none; border-bottom: 1px solid #eee; }
         svg { vertical-align: middle; transform: translateY(-0.15em); }
 
@@ -21,12 +21,12 @@
         
         a.profilecard { display: flex; gap: 1em; color: inherit; align-items: center; }
         
-        img.pfp { border-radius: 4px; width: 40px; }
+        img.pfp { border-radius: 4px; width: 48px; }
 
         main { width: 30em; } /* 30em for text is good reading width */
         aside { width: 15em; }
 
-        h1, h2 { font-family: "Oswald", sans-serif; }
+        h1, h2 { font-family: "Oswald", sans-serif; font-weight: 600; }
         h2 { font-size: 1.2em; border-bottom: 1px solid #eee; padding-bottom: 4px; }
     </style>
 </head>
@@ -45,9 +45,14 @@
     
     <aside>
         <h2>The people you follow follow</h2>
+        
         <a href class="profilecard">
             <img class="pfp" src="https://cdn.pfps.gg/pfps/2296-bocchi-gotoh-hitori.png">
-            <strong>HitoriFan6969</strong>
+            <span>HitoriFan6969</span>
+        </a>
+        <a href class="profilecard">
+            <img class="pfp" src="https://media.tenor.com/OA1NJFw7_BoAAAAM/meme-kucing.gif">
+            <span>stupidcat420</span>
         </a>
 
         <hr>
