@@ -10,6 +10,7 @@ cohost but beter with features like
 - tagging system + global tag (automatically added to every post)
 - ability to indicate a post is sensitive (spoiler/sexually explicit/violence/whatever)
 - reporting system (once no longer invite-only)
+- comments don't exist; you are only able to "repost." your post can embed another post, which can itself embed a post, creating a long thread. the original poster is notified when someone reposts their post, but their original post is not affected
 
 how to not crash and burn
 
