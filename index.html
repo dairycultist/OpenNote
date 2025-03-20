@@ -8,11 +8,17 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
+        :root {
+            --accent: #835ffa;
+        }
+        
         body { font-family: "Roboto", sans-serif; color: #222; display: flex; justify-content: center; align-items: flex-start; gap: 1em; }
         hr { border: none; border-bottom: 1px solid #eee; }
         svg { vertical-align: middle; transform: translateY(-0.15em); }
 
-        div.profilecard { display: flex; gap: 1em; }
+        a { color: var(--accent); }
+        
+        a.profilecard { display: flex; gap: 1em; }
         
         img.pfp { border-radius: 4px; width: 40px; }
 
@@ -27,7 +33,7 @@
     
     <aside>
         <h1>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" width="1.5em" height="1.5em" fill="#835ffa"><path d="M280-160v-441q0-33 24-56t57-23h439q33 0 56.5 23.5T880-600v320L680-80H360q-33 0-56.5-23.5T280-160ZM81-710q-6-33 13-59.5t52-32.5l434-77q33-6 59.5 13t32.5 52l10 54h-82l-7-40-433 77 40 226v279q-16-9-27.5-24T158-276L81-710Zm279 110v440h280v-160h160v-280H360Zm220 220Z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" width="1.5em" height="1.5em" fill="var(--accent)"><path d="M280-160v-441q0-33 24-56t57-23h439q33 0 56.5 23.5T880-600v320L680-80H360q-33 0-56.5-23.5T280-160ZM81-710q-6-33 13-59.5t52-32.5l434-77q33-6 59.5 13t32.5 52l10 54h-82l-7-40-433 77 40 226v279q-16-9-27.5-24T158-276L81-710Zm279 110v440h280v-160h160v-280H360Zm220 220Z"/></svg>
             OpenNote
         </h1>
     </aside>
@@ -38,14 +44,14 @@
     
     <aside>
         <h2>The people you follow follow</h2>
-        <div class="profilecard">
+        <a class="profilecard">
             <img class="pfp" src="https://cdn.pfps.gg/pfps/2296-bocchi-gotoh-hitori.png">
             <strong>HitoriFan6969</strong>
-        </div>
+        </a>
 
         <hr>
         
-        <div style="font-size: small; color: #aaa;">Copyright the OpenNote team. All rights reserved.<br><br>Have ideas for OpenNote? Please tell us at opennote@gmail.com!</div>
+        <div style="font-size: small; color: #aaa;">© 2025 the OpenNote team. All rights reserved.<br><br>Have ideas for OpenNote? Please tell us at opennote@gmail.com!</div>
     </aside>
     
 </body>
