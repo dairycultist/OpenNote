@@ -1,14 +1,20 @@
 # OpenNote
-cohost but beter
+cohost but beter with features like
 
-- dont pay employees, *maybe* have a plus-tier subscription (hobby/side-project, not company)
-- optimize server usage (i.e. no video hosting)
-- be like tumblr
+- accounts
 - be user-first (safe and friendly to all)
   - allow users to post as much text as they wanted and include (limited) HTML/CSS
   - image uploading
   - dont run ads
-- reporting system once no longer invite-only
+- tagging system + global tag (automatically added to every post)
+- ability to indicate a post is sensitive (spoiler/sexually explicit/violence/whatever)
+- reporting system (once no longer invite-only)
+
+how to not crash and burn
+
+- dont pay employees, *maybe* have a plus-tier subscription (hobby/side-project, not company)
+- optimize server usage (i.e. no video hosting idk)
+- be like tumblr
 
 Client: HTML that uses TypeScript (JS) to make requests to the server with tRPC
 
