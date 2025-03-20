@@ -16,9 +16,10 @@
         hr { border: none; border-bottom: 1px solid #eee; }
         svg { vertical-align: middle; transform: translateY(-0.15em); }
 
-        a { color: var(--accent); }
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { text-decoration: underline; }
         
-        a.profilecard { display: flex; gap: 1em; }
+        a.profilecard { display: flex; gap: 1em; color: inherit; align-items: center; }
         
         img.pfp { border-radius: 4px; width: 40px; }
 
@@ -44,7 +45,7 @@
     
     <aside>
         <h2>The people you follow follow</h2>
-        <a class="profilecard">
+        <a href class="profilecard">
             <img class="pfp" src="https://cdn.pfps.gg/pfps/2296-bocchi-gotoh-hitori.png">
             <strong>HitoriFan6969</strong>
         </a>
