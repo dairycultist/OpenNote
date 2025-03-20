@@ -9,3 +9,7 @@ cohost but beter
   - image uploading
   - dont run ads
 - reporting system once no longer invite-only
+
+Client: HTML that uses TS (JS) to make requests to the server
+
+Server: TS (JS) which listens to requests and stores information in an SQL db
