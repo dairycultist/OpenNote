@@ -6,10 +6,16 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
-        body { font-family: "Roboto", sans-serif; color: #222; }
-        h1 { font-family: "Oswald", sans-serif; }
-        main { margin: auto; width: 30em; } /* 30em for text is good reading width */
+        body { font-family: "Roboto", sans-serif; color: #222; display: flex; justify-content: center; align-items: flex-start; gap: 1em; }
+        h1, h2 { font-family: "Oswald", sans-serif; }
+        h2 { border-bottom: 1px solid #eee; padding-bottom: 4px; }
+        hr { border: none; border-bottom: 1px solid #eee; }
         svg { vertical-align: middle; transform: translateY(-0.15em); }
+
+        img.pfp { border-radius: 4px; width: 40px; }
+
+        main { width: 30em; } /* 30em for text is good reading width */
+        aside { width: 15em; }
     </style>
 </head>
 <body>
@@ -20,5 +26,12 @@
         </h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ante augue, congue sodales massa id, pharetra aliquet ipsum. Vivamus aliquet tincidunt lacinia. Suspendisse eu consectetur tortor, at mollis neque. Cras risus ligula, scelerisque a hendrerit ut, consectetur sed neque. In efficitur, massa id efficitur aliquet, felis ipsum euismod neque, vitae eleifend est urna feugiat augue. Ut lacinia mattis ligula. Fusce lacinia dui eget urna consequat tempus. Curabitur vulputate metus cursus est bibendum iaculis. Aliquam at elit vitae nunc viverra ultrices. Nunc vehicula cursus ipsum et lacinia. Suspendisse aliquam auctor quam, ac sodales libero tempor quis. Integer vehicula a ipsum sit amet gravida. Proin lobortis dui ante, eu faucibus enim consequat sit amet. Nam convallis orci sed egestas scelerisque. Aenean nec lacus nec nunc mattis scelerisque.</p>
     </main>
+    <aside>
+        <h2>The people you follow follow</h2>
+        <img class="pfp" src="https://cdn.pfps.gg/pfps/2296-bocchi-gotoh-hitori.png">
+
+        <hr>
+        <small>Copyright me. All rights reserves.<br><br>Have suggestions for OpenNote? Please tell us at opennote@gmail.com!</small>
+    </aside>
 </body>
 </html>
