@@ -10,6 +10,6 @@ cohost but beter
   - dont run ads
 - reporting system once no longer invite-only
 
-Client: HTML that uses TS (JS) to make requests to the server
+Client: HTML that uses TypeScript (JS) to make requests to the server with tRPC
 
-Server: TS (JS) which listens to requests and stores information in an SQL db
+Server: TypeScript (JS) which listens to requests and stores information in an SQL db
