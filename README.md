@@ -6,6 +6,7 @@ cohost but beter with features like
   - allow users to post as much text as they wanted and include (limited) HTML/CSS
   - image uploading
   - dont run ads
+  - dont show likes, only people who liked
 - tagging system + global tag (automatically added to every post)
 - ability to indicate a post is sensitive (spoiler/sexually explicit/violence/whatever)
 - reporting system (once no longer invite-only)
