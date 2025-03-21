@@ -30,7 +30,8 @@
         a.button.selected { background: #f2f2f2; font-weight: 700; }
         a.button:hover { background: #ddd; }
 
-        a.profilecard { margin: 0.5em 0; display: flex; gap: 1em; color: inherit; align-items: center; }
+        a.profilecard { transition-duration: 0.15s; margin: 0.5em 0; display: flex; gap: 1em; color: inherit; align-items: center; text-decoration: none; }
+        a.profilecard:hover { background: #ddd; }
 
         main { width: 35em; } /* 30em for text is good reading width */
         aside { width: 15em; }
@@ -39,7 +40,7 @@
         h2 { font-size: 1.2em; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
 
         /* post stuff */
-        div.postcard { border-radius: 1em; border: 1px solid var(--border); overflow: hidden; margin: 0.5em 0; }
+        div.postcard { border-radius: 0.5em; border: 1px solid var(--border); overflow: hidden; margin: 0.5em 0; }
         div.postcard p { margin: 1em; }
 
         div.postheader { display: flex; align-items: center; gap: 0.5em; margin: 1em; font-size: 0.8em; color: var(--text-soft); }
@@ -109,14 +110,14 @@
             <img class="pfp" src="https://cdn.pfps.gg/pfps/2296-bocchi-gotoh-hitori.png">
             <div>
                 <strong>HitoriFan6969</strong><br>
-                <span style="color: var(--text-soft); text-decoration-color: var(--text-soft);">@hitorimybeloved</span>
+                <span style="color: var(--text-soft);">@hitorimybeloved</span>
             </div>
         </a>
         <a href class="profilecard">
             <img class="pfp" src="https://media.tenor.com/OA1NJFw7_BoAAAAM/meme-kucing.gif">
             <div>
                 <strong>stupidcat420</strong><br>
-                <span style="color: var(--text-soft); text-decoration-color: var(--text-soft);">@stupidcat420</span>
+                <span style="color: var(--text-soft);">@stupidcat420</span>
             </div>
         </a>
 
