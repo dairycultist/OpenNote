@@ -6,11 +6,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
+    color-scheme: light dark;
+    
     --background: light-dark(#fff, #111);
     --accent: #835ffa;
     --border: light-dark(#ddd, #333);
     --text: light-dark(#222, #ddd);
-    --text-soft: #bbb;
+    --text-soft: light-dark(#bbb, #555);
 }
 
 body { font-family: "Roboto", sans-serif; background: var(--background); color: var(--text); display: flex; justify-content: center; align-items: flex-start; gap: 2em; }
@@ -29,7 +31,7 @@ a.button.selected { background: #f2f2f2; font-weight: 700; }
 a.button:hover { background: #ddd; }
 
 a.profilecard { transition-duration: 0.15s; margin: 0.5em 0; display: flex; gap: 1em; color: inherit; align-items: center; text-decoration: none; }
-a.profilecard:hover { background: #ddd; }
+a.profilecard:hover { background: #f2f2f2; }
 
 main { width: 35em; } /* 30em for text is good reading width */
 aside { width: 15em; }
