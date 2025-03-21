@@ -9,7 +9,7 @@
     color-scheme: light dark;
     
     --background: light-dark(#f6f0e8, #111);
-    --background-off: light-dark(#edc, #222);
+    --background-off: light-dark(#e8dccf, #222);
     --accent: #dc8c0c;
     --border: light-dark(#cb9, #444);
     --text: light-dark(#000, #ddd);
