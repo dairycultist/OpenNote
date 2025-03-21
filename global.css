@@ -9,10 +9,11 @@
     color-scheme: light dark;
     
     --background: light-dark(#fff, #111);
+    --background-off: light-dark(#f2f2f2, #333);
     --accent: #835ffa;
-    --border: light-dark(#ccc, #333);
+    --border: light-dark(#ccc, #444);
     --text: light-dark(#222, #ddd);
-    --text-soft: light-dark(#ccc, #555);
+    --text-soft: light-dark(#aaa, #777);
 }
 
 body { font-family: "Roboto", sans-serif; background: var(--background); color: var(--text); display: flex; justify-content: center; align-items: flex-start; gap: 2em; }
@@ -27,11 +28,11 @@ a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 a.button { transition-duration: 0.15s; display: block; padding: 0.5em 1em; color: inherit; text-decoration: none; }
-a.button.selected { background: #f2f2f2; font-weight: 700; }
-a.button:hover { background: #ddd; }
+a.button.selected { background: var(--background-off); font-weight: 700; }
+a.button:hover { background: var(--background-off); }
 
 a.profilecard { transition-duration: 0.15s; margin: 0.5em 0; display: flex; gap: 1em; color: inherit; align-items: center; text-decoration: none; }
-a.profilecard:hover { background: #f2f2f2; }
+a.profilecard:hover { background: var(--background-off); }
 
 main { width: 35em; } /* 30em for text is good reading width */
 aside { width: 15em; }
