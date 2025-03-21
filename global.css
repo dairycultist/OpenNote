@@ -7,9 +7,6 @@
 
 :root {
     color-scheme: light dark;
-
-    --post: light-dark(#fff, #222);
-    --post-border: light-dark(#ccc, #444);
     
     --background: light-dark(#328, #111);
     --background-off: light-dark(#53b, #222);
