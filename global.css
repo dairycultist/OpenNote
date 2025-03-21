@@ -11,9 +11,9 @@
     --background: light-dark(#328, #111);
     --background-off: light-dark(#53b, #222);
     --accent: #835ffa;
-    --border: light-dark(#ccc, #444);
-    --text: light-dark(#222, #ddd);
-    --text-soft: light-dark(#aaa, #777);
+    --border: light-dark(#769, #444);
+    --text: light-dark(#eef, #ddd);
+    --text-soft: light-dark(#bae, #777);
 }
 
 body { font-family: "Roboto", sans-serif; background: var(--background); color: var(--text); display: flex; justify-content: center; align-items: flex-start; gap: 2em; }
