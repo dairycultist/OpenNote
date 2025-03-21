@@ -11,9 +11,11 @@
         :root {
             --accent: #835ffa;
             --border: #ddd;
+            --text: #222;
+            --text-soft: #bbb;
         }
         
-        body { font-family: "Roboto", sans-serif; color: #222; display: flex; justify-content: center; align-items: flex-start; gap: 2em; }
+        body { font-family: "Roboto", sans-serif; color: var(--text); display: flex; justify-content: center; align-items: flex-start; gap: 2em; }
         hr { border: none; border-bottom: 1px solid var(--border); }
         svg { vertical-align: middle; transform: translateY(-0.15em); }
 
@@ -40,11 +42,9 @@
         div.postcard { border-radius: 1em; border: 1px solid var(--border); overflow: hidden; margin: 0.5em 0; }
         div.postcard p { margin: 1em; }
 
-        div.postheader { display: flex; align-items: center; gap: 0.5em; margin: 1em; font-size: 0.8em; color: #444; }
-        div.postheader a { color: inherit; font-weight: 700; }
+        div.postheader { display: flex; align-items: center; gap: 0.5em; margin: 1em; font-size: 0.8em; color: var(--text-soft); }
+        div.postheader a { color: var(--text); /* #444 */ font-weight: 700; }
         div.postheader img.pfp { width: 28px; }
-
-        div.postdate { color: #bbb; }
 
         div.postfooter { margin: 0.5em; }
     </style>
@@ -107,14 +107,14 @@
             <img class="pfp" src="https://cdn.pfps.gg/pfps/2296-bocchi-gotoh-hitori.png">
             <div>
                 <strong>HitoriFan6969</strong><br>
-                @hitorimybeloved
+                <span style="color: var(--text-soft);">@hitorimybeloved</span>
             </div>
         </a>
         <a href class="profilecard">
             <img class="pfp" src="https://media.tenor.com/OA1NJFw7_BoAAAAM/meme-kucing.gif">
             <div>
                 <strong>stupidcat420</strong><br>
-                @stupidcat420
+                <span style="color: var(--text-soft);">@stupidcat420</span>
             </div>
         </a>
 
