@@ -26,12 +26,15 @@
         a.pagecard:hover { background: #ddd; }
         
         img.pfp { border-radius: 4px; width: 48px; }
+        img.pfp-small { border-radius: 4px; width: 24px; }
 
-        main { width: 30em; } /* 30em for text is good reading width */
+        main { width: 35em; } /* 30em for text is good reading width */
         aside { width: 15em; }
 
-        h1, h2 { font-family: "Oswald", sans-serif; font-weight: 500; }
+        h1, h2 { font-family: "Oswald", sans-serif; font-weight: 400; }
         h2 { font-size: 1.2em; border-bottom: 1px solid #eee; padding-bottom: 4px; }
+
+        div.postcard { background: #eee; border-radius: 1em; border: 1px solid #eee; overflow: hidden; }
     </style>
 </head>
 <body>
@@ -46,7 +49,20 @@
     </aside>
     
     <main>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ante augue, congue sodales massa id, pharetra aliquet ipsum. Vivamus aliquet tincidunt lacinia. Suspendisse eu consectetur tortor, at mollis neque. Cras risus ligula, scelerisque a hendrerit ut, consectetur sed neque. In efficitur, massa id efficitur aliquet, felis ipsum euismod neque, vitae eleifend est urna feugiat augue. Ut lacinia mattis ligula. Fusce lacinia dui eget urna consequat tempus. Curabitur vulputate metus cursus est bibendum iaculis. Aliquam at elit vitae nunc viverra ultrices. Nunc vehicula cursus ipsum et lacinia. Suspendisse aliquam auctor quam, ac sodales libero tempor quis. Integer vehicula a ipsum sit amet gravida. Proin lobortis dui ante, eu faucibus enim consequat sit amet. Nam convallis orci sed egestas scelerisque. Aenean nec lacus nec nunc mattis scelerisque.</p>
+        <div class="postcard">
+            <a href class="profilecard">
+                <img class="pfp-small" src="https://cdn.pfps.gg/pfps/2296-bocchi-gotoh-hitori.png">
+                <span>HitoriFan6969</span>
+            </a>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ante augue, congue sodales massa id, pharetra aliquet ipsum. Vivamus aliquet tincidunt lacinia. Suspendisse eu consectetur tortor, at mollis neque. Cras risus ligula, scelerisque a hendrerit ut, consectetur sed neque. In efficitur, massa id efficitur aliquet, felis ipsum euismod neque, vitae eleifend est urna feugiat augue. Ut lacinia mattis ligula. Fusce lacinia dui eget urna consequat tempus. Curabitur vulputate metus cursus est bibendum iaculis. Aliquam at elit vitae nunc viverra ultrices. Nunc vehicula cursus ipsum et lacinia. Suspendisse aliquam auctor quam, ac sodales libero tempor quis. Integer vehicula a ipsum sit amet gravida. Proin lobortis dui ante, eu faucibus enim consequat sit amet. Nam convallis orci sed egestas scelerisque. Aenean nec lacus nec nunc mattis scelerisque.</p>
+            <hr>
+            <a href class="profilecard">
+                <img class="pfp-small" src="https://media.tenor.com/OA1NJFw7_BoAAAAM/meme-kucing.gif">
+                <span>stupidcat420</span>
+            </a>
+            <p>what</p>
+            <p>like</p>
+        </div>
     </main>
     
     <aside>
