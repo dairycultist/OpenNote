@@ -7,9 +7,10 @@
 
 :root {
     color-scheme: light dark;
-    
-    --background: light-dark(#fff, #111);
-    --background-off: light-dark(#f2f2f2, #333);
+
+    --post: light-dark(#fff, #222);
+    --background: light-dark(#00a, #111);
+    --background-off: light-dark(#00c, #222);
     --accent: #835ffa;
     --border: light-dark(#ccc, #444);
     --text: light-dark(#222, #ddd);
