@@ -7,7 +7,7 @@ div.postheader img.pfp { width: 28px; }
 a.postname { color: var(--text); /* #444 */ font-weight: 700; }
 a.posthandle { color: inherit; }
 
-div.posttags { display: flex; gap: 4px; flex-wrap: wrap; }
+div.posttags { display: flex; gap: 4px; flex-wrap: wrap; margin: 1em 0.5em; }
 div.posttags a { border: 1px solid var(--border); border-radius: 1000px; padding: 1px 6px; font-size: smaller; color: var(--text-soft); }
 
 div.postfooter { margin: 0.5em; }
