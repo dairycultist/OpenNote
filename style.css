@@ -35,15 +35,3 @@ aside { width: 15em; }
 
 h1, h2 { font-family: "Oswald", sans-serif; font-weight: 400; }
 h2 { font-size: 1.2em; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
-
-/* post stuff */
-div.postcard { border-radius: 0.5em; border: 1px solid var(--border); overflow: hidden; margin: 0.5em 0; }
-div.postcard p { margin: 1em; }
-
-div.postheader { display: flex; align-items: center; gap: 0.5em; margin: 1em; font-size: 0.8em; color: var(--text-soft); }
-div.postheader img.pfp { width: 28px; }
-
-a.postname { color: var(--text); /* #444 */ font-weight: 700; }
-a.posthandle { color: inherit; }
-
-div.postfooter { margin: 0.5em; }
