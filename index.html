@@ -10,10 +10,11 @@
 
         :root {
             --accent: #835ffa;
+            --border: #ddd;
         }
         
         body { font-family: "Roboto", sans-serif; color: #222; display: flex; justify-content: center; align-items: flex-start; gap: 2em; }
-        hr { border: none; border-bottom: 1px solid #eee; }
+        hr { border: none; border-bottom: 1px solid var(--border); }
         svg { vertical-align: middle; transform: translateY(-0.15em); }
 
         img.pfp { border-radius: 4px; width: 48px; }
@@ -31,13 +32,13 @@
         aside { width: 15em; }
 
         h1, h2 { font-family: "Oswald", sans-serif; font-weight: 400; }
-        h2 { font-size: 1.2em; border-bottom: 1px solid #eee; padding-bottom: 4px; }
+        h2 { font-size: 1.2em; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
 
         /* post stuff */
-        div.postcard { border-radius: 1em; border: 1px solid #eee; overflow: hidden; }
+        div.postcard { border-radius: 1em; border: 1px solid var(--border); overflow: hidden; }
         div.postcard p { margin: 1em; }
 
-        a.postheader { display: flex; gap: 0.5em; margin: 1em; }
+        a.postheader { display: flex; align-items: center; color: inherit; gap: 0.5em; margin: 1em; }
         a.postheader img.pfp { width: 28px; }
     </style>
 </head>
