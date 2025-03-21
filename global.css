@@ -10,9 +10,9 @@
     
     --background: light-dark(#fff, #111);
     --accent: #835ffa;
-    --border: light-dark(#ddd, #333);
+    --border: light-dark(#ccc, #333);
     --text: light-dark(#222, #ddd);
-    --text-soft: light-dark(#bbb, #555);
+    --text-soft: light-dark(#ccc, #555);
 }
 
 body { font-family: "Roboto", sans-serif; background: var(--background); color: var(--text); display: flex; justify-content: center; align-items: flex-start; gap: 2em; }
