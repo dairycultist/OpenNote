@@ -6,13 +6,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
+    --background: light-dark(#fff, #111);
     --accent: #835ffa;
-    --border: #ddd;
-    --text: #222;
+    --border: light-dark(#ddd, #333);
+    --text: light-dark(#222, #ddd);
     --text-soft: #bbb;
 }
 
-body { font-family: "Roboto", sans-serif; color: var(--text); display: flex; justify-content: center; align-items: flex-start; gap: 2em; }
+body { font-family: "Roboto", sans-serif; background: var(--background); color: var(--text); display: flex; justify-content: center; align-items: flex-start; gap: 2em; }
 hr { border: none; border-bottom: 1px solid var(--border); margin: 1em 0; }
 svg { vertical-align: middle; transform: translateY(-0.15em); }
 
