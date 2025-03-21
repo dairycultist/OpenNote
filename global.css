@@ -8,12 +8,12 @@
 :root {
     color-scheme: light dark;
     
-    --background: light-dark(#328, #111);
-    --background-off: light-dark(#53b, #222);
-    --accent: #835ffa;
-    --border: light-dark(#769, #444);
+    --background: light-dark(#210, #111);
+    --background-off: light-dark(#530, #222);
+    --accent: #dc8c0c;
+    --border: light-dark(#976, #444);
     --text: light-dark(#eef, #ddd);
-    --text-soft: light-dark(#bae, #777);
+    --text-soft: light-dark(#853, #777);
 }
 
 body { font-family: "Roboto", sans-serif; background: var(--background); color: var(--text); display: flex; justify-content: center; align-items: flex-start; gap: 2em; }
