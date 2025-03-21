@@ -1,4 +1,4 @@
-div.postcard { border-radius: 0.5em; border: 1px solid var(--border); overflow: hidden; margin: 0.5em 0; }
+div.postcard { background: var(--post); border-radius: 0.5em; border: 1px solid var(--border); overflow: hidden; margin: 0.5em 0; }
 div.postcard p { margin: 1em; }
 
 div.postheader { display: flex; align-items: center; gap: 0.5em; margin: 1em; font-size: 0.8em; color: var(--text-soft); }
