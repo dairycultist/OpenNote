@@ -9,8 +9,10 @@
     color-scheme: light dark;
 
     --post: light-dark(#fff, #222);
-    --background: light-dark(#00a, #111);
-    --background-off: light-dark(#00c, #222);
+    --post-border: light-dark(#ccc, #444);
+    
+    --background: light-dark(#328, #111);
+    --background-off: light-dark(#53b, #222);
     --accent: #835ffa;
     --border: light-dark(#ccc, #444);
     --text: light-dark(#222, #ddd);
