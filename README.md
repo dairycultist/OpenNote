@@ -21,3 +21,5 @@ how to not crash and burn
 Client: HTML that uses TypeScript (JS) to make requests to the server with tRPC
 
 Server: TypeScript (JS) which listens to requests and stores information in an SQL db
+
+yo twitter ur a private company why do you care about supporting free speech, your appeal should be that you allow people to share what they do with others, be pro-user, be anti-drama, have clean media embeds for goodness sake
