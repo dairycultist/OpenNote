@@ -21,10 +21,11 @@ Client: HTML that uses TypeScript (JS) to make requests to the server with tRPC
 
 Server: TypeScript (JS) which listens to requests and stores information in an SQL db
 
-or I might just make it solo in php
+or I might just make it solo in php + sql
 
 yo twitter ur a private company why do you care about supporting free speech, your appeal should be that you allow people to share what they do with others, you should be pro-user, be anti-drama, have decent media embeds for goodness sake
 
-I prefer Follow system (I follow you to view your content; it's not reciprocal) to Friend system (both sides must agree to being friends)
+Follow system (I follow you to view your content; it's not reciprocal; for a site where you want to share the stuff you do)
+Friend system (both sides must agree to being friends; for a site where you want to engage with others)
 
 if I had infinite money I would buy twitter, remove the algorithm, make the "suggested follows" more prominent, and moderate it so heavily to not have political, I do not care about the news the trending tab can go too
