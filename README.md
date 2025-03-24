@@ -22,4 +22,6 @@ Client: HTML that uses TypeScript (JS) to make requests to the server with tRPC
 
 Server: TypeScript (JS) which listens to requests and stores information in an SQL db
 
-yo twitter ur a private company why do you care about supporting free speech, your appeal should be that you allow people to share what they do with others, be pro-user, be anti-drama, have clean media embeds for goodness sake
+yo twitter ur a private company why do you care about supporting free speech, your appeal should be that you allow people to share what they do with others, you should be pro-user, be anti-drama, have decent media embeds for goodness sake
+
+if I had infinite money I would buy twitter, remove the algorithm, make the "suggested follows" more prominent, and moderate it so heavily to not have political, I do not care about the news the trending tab can go too
