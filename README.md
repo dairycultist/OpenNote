@@ -3,8 +3,7 @@ cohost but beter with features like
 
 - accounts
 - be user-first (safe and friendly to all)
-  - allow users to post as much text as they wanted and include (limited) HTML/CSS
-  - image uploading
+  - allow users to post an unlimited number of characters, include (limited) HTML/CSS, and upload images
   - dont run ads
   - dont show like-count, only people who liked
 - tagging system + global tag (automatically added to every post)
