@@ -23,6 +23,8 @@ Server: TypeScript (JS) which listens to requests and stores information in an S
 
 or I might just make it solo in php + sql, it's basically just frontend + db + security right
 
+compact webdesign like email :O
+
 yo twitter ur a private company why do you care about supporting free speech, your appeal should be that you allow people to share what they do with others, you should be pro-user, be anti-drama, have decent media embeds for goodness sake
 
 Follow system (I follow you to view your content; it's not reciprocal; for a site where you want to share the stuff you do)
