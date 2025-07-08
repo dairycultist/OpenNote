@@ -4,7 +4,7 @@ Client: HTML that uses TypeScript (JS) to make requests to the server with tRPC
 
 Server: TypeScript (JS) which listens to requests and stores information in an SQL db
 
-or I might just make it solo in php + sql, it's basically just frontend + db + security right
+Invite-only blogging/art platform.
 
 ---
 
@@ -28,6 +28,8 @@ how to not crash and burn
 - be like tumblr
 
 im witerally a tech startup
+
+frontend + db + security
 
 compact webdesign like email :O
 
