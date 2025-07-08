@@ -27,6 +27,8 @@ how to not crash and burn
 - optimize server usage (i.e. no video hosting idk)
 - be like tumblr
 
+im witerally a tech startup
+
 compact webdesign like email :O
 
 yo twitter ur a private company why do you care about supporting free speech, your appeal should be that you allow people to share what they do with others, you should be pro-user, be anti-drama, have decent media embeds for goodness sake
