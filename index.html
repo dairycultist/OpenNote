@@ -4,11 +4,15 @@
     <meta charset="UTF-8">
     <title>Title of the document</title>
     <style>
-        body { color: #444; }
+        body { color: #444; width: 900px; margin: auto; font-family: sans-serif; }
         th { white-space: nowrap; text-shadow: 0 0 6px black, 0 0 6px black; text-align: left; padding: 0.75em; color: white; }
         th + th { border-left: 2px solid white; }
         td + td { border-left: 1px solid lightgrey; }
         td { padding: 1em; }
+
+        tr:nth-child(odd) { background: #eee; }
+
+        table { margin: 1em 0; border: 3px outset #390; width: 100%; border-spacing: 0; border-radius: 6px; }
 
         button {
             color: #444; padding: 0.2em 1em; font-weight: 700; border: 1.5px solid orange; border-radius: 4px; background: linear-gradient(to top, #FFC, #FD9, #FFC);
@@ -23,14 +27,28 @@
 
         a { color: #00F; }
         th a { color: inherit; }
+
+        img.emoji { vertical-align: middle; height: 1.5em; }
+
+        header { font-size: small; padding: 1em 0; text-align: right; }
     </style>
 </head>
 <body>
 
-    <!-- https://htmlcolorcodes.com/color-chart/web-safe-color-chart/ -->
+    <header>
+        Welcome, <strong>Guest</strong>
+        <button>
+            Sign in
+        </button>
+    </header>
 
-    <table style="border: 3px outset #339900; font-family: sans-serif; width: 100%; border-spacing: 0; border-radius: 6px;">
-        <tr style="background: linear-gradient(to right, #339900, #99FF66);">
+    <center>
+        <img src="https://web.archive.org/web/20091027081552im_/http://hk.geocities.com/cliff072002/girlp4798.gif">
+        <h1>awesome board</h1>
+    </center>
+
+    <table>
+        <tr style="background: linear-gradient(to right, #390, #9F6);">
             <th>started by: <a href>MilkCat</a></th>
             <th style="width: 100%;">first posted: 10/20/2025</th>
         </tr>
@@ -41,14 +59,22 @@
             <td>
                 I can't handle dis no mo!
                 <!-- https://gifcities.org/ -->
-                <img style="vertical-align: middle; height: 1.5em;" src="https://web.archive.org/web/20091027084711im_/http://hk.geocities.com/panpanccp2002/g13.gif">
-                <br>
+                <img class="emoji" src="https://web.archive.org/web/20091027084711im_/http://hk.geocities.com/panpanccp2002/g13.gif">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href>RepublicanJohn</a>
+            </td>
+            <td>
+                typical liberal mindset
+                <img class="emoji" src="https://blob.gifcities.org/gifcities/G2SZSRF7C64UGEAUZVAFFJZUPA4AQ7XG.gif">
             </td>
         </tr>
         <tr>
             <td></td>
             <td>
-                <a href>Open thread</a>
+                <a href>See (5) more posts</a>
             </td>
         </tr>
     </table>
