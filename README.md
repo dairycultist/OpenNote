@@ -8,6 +8,8 @@ Invite-only blogging/art platform.
 
 ---
 
+are anonymous or logged-in imageboards/forums better? would people use a forum I make if it was dedicated to sharing images of fat anime girls and furries
+
 cohost/X/tumblr but beter with features like
 
 - accounts
