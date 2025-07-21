@@ -1,6 +1,7 @@
-const { createServer } = require('node:http');
+const fs = require("fs");
+const { createServer } = require("node:http");
 
-const hostname = "127.0.0.1";
+const hostname = "localhost";
 const port = 3000;
 
 const server = createServer((req, res) => {
@@ -8,8 +9,18 @@ const server = createServer((req, res) => {
     // match endpoints
     if (req.method == "GET" && req.url == "/") {
 
-        res.writeHead(200, { "Content-Type": "text/plain" });
-        res.end("hello");
+        try {
+
+            const data = fs.readFileSync("index.html", "utf8");
+
+            res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+            res.end(data);
+
+        } catch (err) {
+
+            res.writeHead(404, { "Content-Type": "text/plain" });
+            res.end("Error 404: " + err);
+        }
 
     } else {
 
