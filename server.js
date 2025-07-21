@@ -5,28 +5,37 @@ const hostname = "localhost";
 const port = 3000;
 
 const server = createServer((req, res) => {
-    
-    // match endpoints
-    if (req.method == "GET" && req.url == "/") {
 
-        try {
+    try {
 
-            const data = fs.readFileSync("index.html", "utf8");
+        // match endpoints
+        if (req.method == "GET" || req.method == "HEAD") {
 
-            res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-            res.end(data);
+            if (req.url == "/") {
 
-        } catch (err) {
+                const data = fs.readFileSync("index.html", "utf8");
 
-            res.writeHead(404, { "Content-Type": "text/plain" });
-            res.end("Error 404: " + err);
+                res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+                res.end(data);
+
+                // TODO handle /image /thread
+
+            } else {
+
+                res.writeHead(400, { "Content-Type": "text/plain" });
+                res.end("Error 400: Bad request endpoint.");
+            }
+
+        } else {
+
+            res.writeHead(501, { "Content-Type": "text/plain" });
+            res.end("Error 501: Server has no implementation to handle " + req.method + ".");
         }
 
-    } else {
+    } catch (err) {
 
-        // default response if all else fails
-        res.writeHead(400, { "Content-Type": "text/plain" });
-        res.end("Error 400: Bad request.");
+        res.writeHead(404, { "Content-Type": "text/plain" });
+        res.end("Error 404: " + err);
     }
 });
 
