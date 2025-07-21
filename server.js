@@ -4,6 +4,13 @@ const { createServer } = require("node:http");
 const hostname = "localhost";
 const port = 3000;
 
+// replacements and "injections" (the string is placed before the target string instead of replacing it)
+// inject _ with _ before _
+function inject(medium, target, data) {
+
+    return medium.replace(target, data + target);
+}
+
 const server = createServer((req, res) => {
 
     try {
@@ -13,10 +20,22 @@ const server = createServer((req, res) => {
 
             if (req.url == "/") {
 
-                const data = fs.readFileSync("index.html", "utf8");
+                var index = fs.readFileSync("html/index.html", "utf8");
 
+                for (var i = 0; i < 10; i++) {
+
+                    var thread = fs.readFileSync("html/thread_wrapper.htm", "utf8");
+
+                    for (var j = 0; j < 3; j++) {
+                        thread = inject(thread, "<!-- POSTS -->", fs.readFileSync("html/thread_post.htm", "utf8"));
+                    }
+
+                    index = inject(index, "<!-- THREADS -->", thread);
+                }
+
+                // respond
                 res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-                res.end(data);
+                res.end(index);
 
                 // TODO handle /image /thread
 
