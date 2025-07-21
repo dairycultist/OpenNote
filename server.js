@@ -33,9 +33,17 @@ const server = createServer((req, res) => {
                     threadText = threadText.replace("<!-- TITLE -->", thread.title);
                     threadText = threadText.replace("<!-- ID -->", threadID);
 
-                    for (const post of thread.posts) {
+                    for (const postID in thread.posts) {
 
-                        threadText = inject(threadText, "<!-- POSTS -->", fs.readFileSync("html/thread_post.htm", "utf8").replace("<!-- MESSAGE -->", post));
+                        var post = thread.posts[postID];
+
+                        threadText = inject(
+                            threadText,
+                            "<!-- POSTS -->",
+                            fs.readFileSync("html/thread_post.htm", "utf8")
+                                .replace("<!-- MESSAGE -->", post.message)
+                                .replace("<!-- META -->", "#" + postID + "<br>10th 4/2025 4:20pm")
+                        );
                     }
 
                     indexText = inject(indexText, "<!-- THREADS -->", threadText);
@@ -89,8 +97,12 @@ server.listen(port, hostname, () => {
                 "0": {
                     "title": "houseMD",
                     "posts": [
-                        "I like beans",
-                        "me 2"
+                        {
+                            "message": "I like beans"
+                        },
+                        {
+                            "message": "me 2"
+                        }
                     ]
                 }
             }
