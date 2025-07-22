@@ -140,6 +140,9 @@ function postToThread(req, res, threadID) {
         // process post data
         var post = qs.parse(body);
 
+        if (!Array.isArray(post.images))
+            post.images = [post.images]
+
         const base64Parts = post.base64.split(";");
         for (const i in base64Parts) {
             fs.writeFileSync("img/" + post.images[i], Buffer.from(base64Parts[i], "base64"));
@@ -207,6 +210,8 @@ const server = createServer((req, res) => {
             // no endpoints matched
             res.writeHead(400, { "Content-Type": "text/plain" });
             res.end("Error 400: Bad request endpoint\n" + req.method + " " + req.url);
+
+            console.log("400: " + req.method + " " + req.url);
         }
 
     } catch (err) {
