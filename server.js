@@ -1,4 +1,5 @@
 const fs = require("fs");
+const qs = require("querystring");
 const { createServer } = require("node:http");
 
 const hostname = "localhost";
@@ -59,14 +60,48 @@ const server = createServer((req, res) => {
             } else {
 
                 res.writeHead(400, { "Content-Type": "text/plain" });
-                res.end("Error 400: Bad request endpoint.");
+                res.end("Error 400: Bad request endpoint\n" + req.method + " " + req.url);
             }
         
         } else if (req.method == "POST") {
 
-            // process post data
+            var body = "";
 
-            // redirect to page they came from
+            req.on("data", function (data) {
+
+                body += data;
+
+                // Too much POST data, kill the connection!
+                if (body.length > 1e6)
+                    req.socket.destroy();
+            });
+
+            req.on("end", function () {
+
+                // process post data
+                var post = qs.parse(body);
+                
+                var threadID = 0;
+
+                while (db.threads[threadID] != undefined) {
+                    threadID = Math.floor(Math.random() * 1000);
+                }
+
+                db.threads[threadID] = {
+                    "title": post["title"],
+                    "posts": [
+                        {
+                            "message": post["firstmessage"]
+                        }
+                    ]
+                };
+
+                res.writeHead(200, { "Content-Type": "text/plain" });
+                res.end("");
+
+                // redirect to page they came from
+
+            });
 
         // unimplemented request method
         } else {
