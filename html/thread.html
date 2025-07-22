@@ -7,6 +7,8 @@
         body { width: 900px; margin: auto; font-family: sans-serif; }
         .post { border: 1px solid black; margin: 1em 0; padding: 1em; }
         .post:first-of-type { background: #eee; font-size: 1.1em; }
+
+        img { height: 200px; }
     </style>
     <script>
 
@@ -47,7 +49,7 @@
 
                         var base64 = imageBitmapToBase64(await createImageBitmap(file));
                         
-                        base64List += base64.split(",")[1];// + ";"; // remove the data URL prefix to get only the base64 string
+                        base64List += base64.split(",")[1] + ";"; // remove the data URL prefix to get only the base64 string
                         txt += "<img src='" + base64 + "'>";
                     }
                 }

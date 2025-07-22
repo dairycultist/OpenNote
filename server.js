@@ -103,13 +103,15 @@ function respondThread(res, threadID) {
 
         var post = thread.posts[postID];
 
-        threadText = inject(
-            threadText,
-            "<!-- POSTS -->",
-            fs.readFileSync("html/thread_post.htm", "utf8")
+        var postText = fs.readFileSync("html/thread_post.htm", "utf8")
                 .replace("<!-- MESSAGE -->", post.message)
-                .replace("<!-- META -->", "10th 4/2025 4:20pm (#" + postID + ")")
-        );
+                .replace("<!-- META -->", "10th 4/2025 4:20pm (#" + postID + ")");
+
+        if (post.images != undefined)
+            for (const img of post.images)
+                postText = inject(postText, "<!-- IMAGES -->", "<img src='img/" + img + "'>");
+
+        threadText = inject(threadText, "<!-- POSTS -->", postText);
     }
 
     // respond
@@ -138,7 +140,10 @@ function postToThread(req, res, threadID) {
         // process post data
         var post = qs.parse(body);
 
-        fs.writeFileSync("image.png", Buffer.from(post.base64, "base64"));
+        const base64Parts = post.base64.split(";");
+        for (const i in base64Parts) {
+            fs.writeFileSync("img/" + post.images[i], Buffer.from(base64Parts[i], "base64"));
+        }
 
         if (post.message == undefined || post.message.trim().length == 0) {
             respondThread(res, req.url.substring(8));
@@ -147,7 +152,8 @@ function postToThread(req, res, threadID) {
 
         db.threads[threadID].posts.push(
             {
-                "message": post.message
+                "message": post.message,
+                "images": post.images
             }
         );
 
