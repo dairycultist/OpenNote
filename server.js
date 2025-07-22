@@ -157,8 +157,14 @@ function postToThread(req, res, threadID) {
         },
         function (post) {
 
-            if (!Array.isArray(post.images))
-                post.images = [post.images]
+            if (!Array.isArray(post.images)) {
+
+                if (post.images.trim().length == 0) {
+                    post.images = []; // images will return "" instead of an empty array when there are no images
+                } else {
+                    post.images = [post.images]; // images will return a string instead of an array of one string when there is one image
+                }
+            }
 
             // maybe limit the number of images you can post per post
 

@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <title>Thread</title>
     <style>
-        body { width: 900px; margin: auto; font-family: sans-serif; }
-        .post { border: 1px solid black; margin: 1em 0; padding: 1em; }
-        .post:first-of-type { background: #eee; font-size: 1.1em; }
+        body { width: 900px; margin: auto; font-family: sans-serif; background: #edf2f4; }
+        .post { margin-top: 2px; background: white; padding: 1em; }
+
+        .post:first-of-type { background: transparent; padding: 0; }
+        .post:first-of-type .message { font-size: 1.2em; }
+        
+        .meta { color: #999; font-size: 0.8em; margin-bottom: 1em; }
+        .images { display: flex; flex-wrap: wrap; margin-top: 1em; }
 
         img { height: 200px; }
     </style>
@@ -86,7 +91,7 @@
                     <label for="message">Message</label>
                 </th>
                 <td>
-                    <textarea type="text" id="message" name="message" value="" required></textarea>
+                    <textarea type="text" id="message" name="message" value="" required style="min-width: 30em; max-width: 30em; min-height: 6em; max-height: 20em;"></textarea>
                 </td>
             </tr>
             <tr>
