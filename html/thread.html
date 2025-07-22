@@ -8,6 +8,43 @@
         .post { border: 1px solid black; margin: 1em 0; padding: 1em; }
         .post:first-of-type { background: #eee; font-size: 1.1em; }
     </style>
+    <script>
+
+        function updateImages() {
+
+            var x = document.getElementById("images");
+            var txt = "";
+
+            if ("files" in x) {
+
+                if (x.files.length == 0) {
+                    txt = "Select one or more files.";
+                } else {
+                    for (var i = 0; i < x.files.length; i++) {
+
+                        txt += "<br><strong>" + (i+1) + ". file</strong><br>";
+                        var file = x.files[i];
+
+                        if ("name" in file)
+                            txt += "name: " + file.name + "<br>";
+
+                        if ("size" in file)
+                            txt += "size: " + file.size + " bytes <br>";
+                    }
+                }
+            } else {
+                if (x.value == "") {
+                    txt = "";
+                } else {
+                    // browser does not support the files property,
+                    // returns the path of the selected file instead
+                    txt = x.value;
+                }
+            }
+            document.getElementById("imagespreview").innerHTML = txt;
+        }
+
+    </script>
 </head>
 <body>
 
@@ -22,7 +59,22 @@
                     <label for="message">Message</label>
                 </th>
                 <td>
-                    <textarea type="text" id="message" name="message" value=""></textarea>
+                    <textarea type="text" id="message" name="message" value="" required></textarea>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="images">Images</label>
+                </th>
+                <td>
+                    <input type="file" id="images" name="images" multiple accept="image/*" onchange="updateImages()">
+                    <button onclick="document.getElementById('images').value = ''; updateImages();" form="">Clear</button>
+                </td>
+            </tr>
+            <tr>
+                <th></th>
+                <td>
+                    <div id="imagespreview"></div>
                 </td>
             </tr>
             <tr>
@@ -33,6 +85,8 @@
             </tr>
         </table>
     </form>
+
+    <br><br><br><br><br><br>
 
 </body>
 </html>

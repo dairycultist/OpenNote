@@ -126,6 +126,8 @@ function postToThread(req, res, threadID) {
 
     req.on("end", function () {
 
+        console.log(body);
+
         // process post data
         var post = qs.parse(body);
 
