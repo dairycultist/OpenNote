@@ -3,12 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Thread</title>
+    <style>
+        body { width: 900px; margin: auto; font-family: sans-serif; }
+        .post { border: 1px solid black; margin: 1em 0; padding: 1em; }
+        .post:first-of-type { background: #eee; font-size: 1.1em; }
+    </style>
 </head>
 <body>
 
     <h1><!-- TITLE --> [<!-- ID -->]</h1>
 
     <div><!-- POSTS --></div>
+
+    <form method="post">
+        <table>
+            <tr>
+                <th>
+                    <label for="message">Message</label>
+                </th>
+                <td>
+                    <textarea type="text" id="message" name="message" value=""></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Add Post">
+                    <span style="color: red;"><!-- ERROR --></span>
+                </td>
+            </tr>
+        </table>
+    </form>
 
 </body>
 </html>

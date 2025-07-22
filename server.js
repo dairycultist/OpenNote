@@ -38,7 +38,7 @@ function respondIndex(res, error = "") {
     res.end(indexText);
 }
 
-function postIndex(req, res) {
+function postToIndex(req, res) {
 
     var body = "";
 
@@ -112,6 +112,39 @@ function respondThread(res, threadID) {
     res.end(threadText);
 }
 
+function postToThread(req, res, threadID) {
+
+    var body = "";
+
+    req.on("data", function (data) {
+
+        body += data;
+
+        // Too much POST data, kill the connection!
+        if (body.length > 1e6)
+            req.socket.destroy();
+    });
+
+    req.on("end", function () {
+
+        // process post data
+        var post = qs.parse(body);
+
+        if (post.message == undefined || post.message.trim().length == 0) {
+            respondThread(res, req.url.substring(8));
+            return;
+        }
+
+        db.threads[threadID].posts.push(
+            {
+                "message": post.message
+            }
+        );
+
+        respondThread(res, threadID);
+    });
+}
+
 const server = createServer((req, res) => {
 
     try {
@@ -126,7 +159,7 @@ const server = createServer((req, res) => {
                     break;
                 
                 case "POST":
-                    postIndex(req, res);
+                    postToIndex(req, res);
                     break;
 
                 default:
@@ -143,12 +176,13 @@ const server = createServer((req, res) => {
                     respondThread(res, req.url.substring(8));
                     break;
                 
-                // case "POST":
-                //     break;
+                case "POST":
+                    postToThread(req, res, req.url.substring(8));
+                    break;
 
                 default:
                     res.writeHead(501, { "Content-Type": "text/plain" });
-                    res.end("Error 501: Server has no implementation to handle " + req.method + ".");
+                    res.end("Error 501: Server has no implementation to handle " + req.method + " " + req.url);
                     break;
             }
 
