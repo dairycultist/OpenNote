@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <title>Index</title>
     <style>
-        th, td { border-bottom: 1px solid lightgrey; padding: 0.5em; text-align: left; }
-        th + th, td + td { text-align: center; }
+        body { font-family: sans-serif; }
+
+        #threads { width: 100%; }
+        #threads th, #threads td { border-bottom: 1px solid lightgrey; padding: 0.5em; text-align: left; }
+        #threads th + th, #threads td + td { text-align: center; }
+        #threads td a { text-decoration: none; color: black; }
     </style>
 </head>
 <body>
@@ -42,7 +46,7 @@
         </form>
     </div>
 
-    <table style="width: 100%;">
+    <table id="threads">
         <tr>
             <th width="100%">Topic</th>
             <th>ID</th>
