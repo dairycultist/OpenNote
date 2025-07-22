@@ -46,20 +46,19 @@ function respondThread(res, threadID) {
 
     threadText = threadText.replace("<!-- TITLE -->", thread.title);
     threadText = threadText.replace("<!-- ID -->", threadID);
-    threadText = threadText.replace("<!-- MESSAGE -->", thread.posts[0].message);
 
-    // for (const postID in thread.posts) {
+    for (const postID in thread.posts) {
 
-    //     var post = thread.posts[postID];
+        var post = thread.posts[postID];
 
-    //     threadText = inject(
-    //         threadText,
-    //         "<!-- POSTS -->",
-    //         fs.readFileSync("html/thread_post.htm", "utf8")
-    //             .replace("<!-- MESSAGE -->", post.message)
-    //             .replace("<!-- META -->", "#" + postID + "<br>10th 4/2025 4:20pm")
-    //     );
-    // }
+        threadText = inject(
+            threadText,
+            "<!-- POSTS -->",
+            fs.readFileSync("html/thread_post.htm", "utf8")
+                .replace("<!-- MESSAGE -->", post.message)
+                .replace("<!-- META -->", "10th 4/2025 4:20pm (#" + postID + ")")
+        );
+    }
 
     // respond
     res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
@@ -107,12 +106,12 @@ const server = createServer((req, res) => {
                 var post = qs.parse(body);
 
                 if (post.title == undefined || post.title.trim().length == 0) {
-                    respondIndex(req, res, "Please enter a title!");
+                    respondIndex(res, "Please enter a title!");
                     return;
                 }
 
                 if (post.message == undefined || post.message.trim().length == 0) {
-                    respondIndex(req, res, "Please enter a message!");
+                    respondIndex(res, "Please enter a message!");
                     return;
                 }
                 
@@ -131,7 +130,7 @@ const server = createServer((req, res) => {
                     ]
                 };
 
-                respondIndex(req, res);
+                respondIndex(res);
             });
 
         // unimplemented request method
