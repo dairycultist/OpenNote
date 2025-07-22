@@ -109,7 +109,7 @@ function respondThread(res, threadID) {
 
         if (post.images != undefined)
             for (const img of post.images)
-                postText = inject(postText, "<!-- IMAGES -->", "<img src='img/" + img + "'>");
+                postText = inject(postText, "<!-- IMAGES -->", "<img src='/img/" + img + "'>");
 
         threadText = inject(threadText, "<!-- POSTS -->", postText);
     }
@@ -143,6 +143,8 @@ function postToThread(req, res, threadID) {
         if (!Array.isArray(post.images))
             post.images = [post.images]
 
+        // maybe limit the number of images you can post per post
+
         const base64Parts = post.base64.split(";");
         for (const i in base64Parts) {
             fs.writeFileSync("img/" + post.images[i], Buffer.from(base64Parts[i], "base64"));
@@ -162,6 +164,14 @@ function postToThread(req, res, threadID) {
 
         respondThread(res, threadID);
     });
+}
+
+function respondImage(res, path) {
+
+    var image = fs.readFileSync("." + path);
+
+    res.writeHead(200, { "Content-Type": "image/" + path.split(".").at(-1) });
+    res.end(image);
 }
 
 const server = createServer((req, res) => {
@@ -205,13 +215,25 @@ const server = createServer((req, res) => {
                     break;
             }
 
+        } else if (req.url.substring(0, 5) == "/img/") {
+
+            switch (req.method) {
+                case "GET":
+                case "HEAD":
+                    respondImage(res, req.url);
+                    break;
+
+                default:
+                    res.writeHead(501, { "Content-Type": "text/plain" });
+                    res.end("Error 501: Server has no implementation to handle " + req.method + " " + req.url);
+                    break;
+            }
+
         } else {
 
             // no endpoints matched
             res.writeHead(400, { "Content-Type": "text/plain" });
             res.end("Error 400: Bad request endpoint\n" + req.method + " " + req.url);
-
-            console.log("400: " + req.method + " " + req.url);
         }
 
     } catch (err) {

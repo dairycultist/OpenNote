@@ -15,7 +15,7 @@
         function imageBitmapToBase64(imageBitmap) {
 
             const canvas = document.createElement("canvas");
-            canvas.width = 128;
+            canvas.width = 512;
             canvas.height = canvas.width * imageBitmap.height / imageBitmap.width;
 
             const ctx = canvas.getContext("2d");
