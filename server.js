@@ -41,17 +41,23 @@ function respondIndex(res, error = "") {
 function postToIndex(req, res) {
 
     var body = "";
+    var didRespond = false;
 
     req.on("data", function (data) {
 
         body += data;
 
         // Too much POST data, kill the connection!
-        if (body.length > 1e6)
-            req.socket.destroy();
+        if (!didRespond && body.length > 1e6) {
+            respondIndex(res, "Post data too heavy! Try again with fewer bytes!");
+            didRespond = true;
+        }
     });
 
     req.on("end", function () {
+
+        if (didRespond)
+            return;
 
         // process post data
         var post = qs.parse(body);
@@ -120,16 +126,19 @@ function postToThread(req, res, threadID) {
         body += data;
 
         // Too much POST data, kill the connection!
-        if (body.length > 1e6)
+        if (body.length > 1e7) {
+            console.log("Too much POST data, kill the connection!");
             req.socket.destroy();
+            // respondThread(res, threadID, "Upload too heavy!");
+        }
     });
 
     req.on("end", function () {
 
-        console.log(body);
-
         // process post data
         var post = qs.parse(body);
+
+        fs.writeFileSync("image.png", Buffer.from(post.base64, "base64"));
 
         if (post.message == undefined || post.message.trim().length == 0) {
             respondThread(res, req.url.substring(8));

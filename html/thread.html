@@ -10,21 +10,23 @@
     </style>
     <script>
 
-        function imageBitmapToBase64(imageBitmap, format = 'image/png') {
-            const canvas = document.createElement('canvas');
+        function imageBitmapToBase64(imageBitmap) {
+
+            const canvas = document.createElement("canvas");
             canvas.width = 128;
             canvas.height = canvas.width * imageBitmap.height / imageBitmap.width;
 
-            const ctx = canvas.getContext('2d');
+            const ctx = canvas.getContext("2d");
             ctx.drawImage(imageBitmap, 0, 0, canvas.width, canvas.height);
             
-            return canvas.toDataURL(format);
+            return canvas.toDataURL("image/png");
         }
 
         async function updateImages() {
 
             var x = document.getElementById("images");
             var txt = "";
+            var base64List = "";
 
             if ("files" in x) {
 
@@ -43,16 +45,18 @@
 
                         txt += "</strong><br>";
 
-                        txt += "<img src='" + imageBitmapToBase64(await createImageBitmap(file)) + "'>";
+                        var base64 = imageBitmapToBase64(await createImageBitmap(file));
+                        
+                        base64List += base64.split(",")[1];// + ";"; // remove the data URL prefix to get only the base64 string
+                        txt += "<img src='" + base64 + "'>";
                     }
                 }
 
             } else if (x.value != "") {
-                // browser does not support the files property,
-                // returns the path of the selected file instead
-                txt = x.value;
+                txt = "Your browser does not support file reading.";
             }
 
+            document.getElementById("base64").value = base64List;
             document.getElementById("imagespreview").innerHTML = txt;
         }
 
@@ -65,6 +69,7 @@
     <div><!-- POSTS --></div>
 
     <form method="post">
+        <input type="text" id="base64" name="base64" style="display: none;">
         <table>
             <tr>
                 <th>
