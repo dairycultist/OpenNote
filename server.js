@@ -92,7 +92,6 @@ function respondThread(res, threadID) {
     var thread = db.threads[threadID];
 
     threadText = threadText.replace("<!-- TITLE -->", thread.title);
-    threadText = threadText.replace("<!-- ID -->", threadID);
 
     for (const postID in thread.posts) {
 
