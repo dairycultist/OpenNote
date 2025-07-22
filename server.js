@@ -68,115 +68,118 @@ function respondThread(res, threadID, error = "") {
     res.end(threadText);
 }
 
-function postToIndex(req, res) {
-
-    var body = "";
-    var didRespond = false;
-
-    req.on("data", function (data) {
-
-        body += data;
-
-        // Too much POST data, kill the connection!
-        if (!didRespond && body.length > 1e6) {
-            respondIndex(res, "Post data too heavy! Try again with fewer bytes!");
-            didRespond = true;
-        }
-    });
-
-    req.on("end", function () {
-
-        if (didRespond)
-            return;
-
-        // process post data
-        var post = qs.parse(body);
-
-        if (post.title == undefined || post.title.trim().length == 0) {
-            respondIndex(res, "Please enter a title!");
-            return;
-        }
-
-        if (post.message == undefined || post.message.trim().length == 0) {
-            respondIndex(res, "Please enter a message!");
-            return;
-        }
-        
-        var threadID = 0;
-
-        while (db.threads[threadID] != undefined) {
-            threadID = Math.floor(Math.random() * 1000);
-        }
-
-        db.threads[threadID] = {
-            "title": post.title,
-            "posts": [
-                {
-                    "message": post.message
-                }
-            ]
-        };
-
-        respondIndex(res);
-    });
-}
-
-function postToThread(req, res, threadID) {
-
-    var body = "";
-    var didRespond = false;
-
-    req.on("data", function (data) {
-
-        body += data;
-
-        // Too much POST data, kill the connection!
-        if (!didRespond && body.length > 1e6) {
-            respondThread(res, threadID, "Upload too heavy!");
-            didRespond = true;
-        }
-    });
-
-    req.on("end", function () {
-
-        if (didRespond)
-            return;
-
-        // process post data
-        var post = qs.parse(body);
-
-        if (!Array.isArray(post.images))
-            post.images = [post.images]
-
-        // maybe limit the number of images you can post per post
-
-        const base64Parts = post.base64.split(";");
-        for (const i in base64Parts) {
-            fs.writeFileSync("img/" + post.images[i], Buffer.from(base64Parts[i], "base64"));
-        }
-
-        if (post.message == undefined || post.message.trim().length == 0) {
-            respondThread(res, req.url.substring(8));
-            return;
-        }
-
-        db.threads[threadID].posts.push(
-            {
-                "message": post.message,
-                "images": post.images
-            }
-        );
-
-        respondThread(res, threadID);
-    });
-}
-
 function respondImage(res, path) {
 
     var image = fs.readFileSync("." + path);
 
     res.writeHead(200, { "Content-Type": "image/" + path.split(".").at(-1) });
     res.end(image);
+}
+
+function respond400(req, res) {
+
+    res.writeHead(400, { "Content-Type": "text/plain" });
+    res.end("Error 400: Bad request endpoint\n" + req.method + " " + req.url);
+}
+
+function post(req, onExcessivelyHeavy, onSuccessfulRead) {
+
+    var body = "";
+    var didRespond = false;
+
+    req.on("data", function (data) {
+
+        body += data;
+
+        // Too much POST data, kill the connection!
+        if (!didRespond && body.length > 1e6) {
+            onExcessivelyHeavy();
+            didRespond = true;
+        }
+    });
+
+    req.on("end", function () {
+
+        if (didRespond)
+            return;
+
+        onSuccessfulRead(qs.parse(body));
+    });
+}
+
+function postToIndex(req, res) {
+
+    post(
+        req,
+        function () {
+            respondIndex(res, "Post data too heavy! Try again with fewer bytes!");
+        },
+        function (post) {
+
+            if (post.title == undefined || post.title.trim().length == 0) {
+                respondIndex(res, "Please enter a title!");
+                return;
+            }
+
+            if (post.message == undefined || post.message.trim().length == 0) {
+                respondIndex(res, "Please enter a message!");
+                return;
+            }
+            
+            var threadID = 0;
+
+            while (db.threads[threadID] != undefined) {
+                threadID = Math.floor(Math.random() * 1000);
+            }
+
+            db.threads[threadID] = {
+                "title": post.title,
+                "posts": [
+                    {
+                        "message": post.message
+                    }
+                ]
+            };
+
+            respondIndex(res);
+        }
+    );
+}
+
+function postToThread(req, res, threadID) {
+
+    post(
+        req,
+        function () {
+            respondThread(res, threadID, "Upload too heavy!");
+        },
+        function (post) {
+
+            if (!Array.isArray(post.images))
+                post.images = [post.images]
+
+            // maybe limit the number of images you can post per post
+
+            const base64Parts = post.base64.split(";");
+            for (const i in base64Parts) {
+                fs.writeFileSync("img/" + post.images[i], Buffer.from(base64Parts[i], "base64"));
+            }
+
+            if (post.message == undefined || post.message.trim().length == 0) {
+                respondThread(res, req.url.substring(8));
+                return;
+            }
+
+            db.threads[threadID].posts.push(
+                {
+                    "message": post.message,
+                    "images": post.images
+                }
+            );
+
+            respondThread(res, threadID);
+        }
+    );
 }
 
 const server = createServer((req, res) => {
@@ -187,62 +190,36 @@ const server = createServer((req, res) => {
         if (req.url == "/") {
 
             switch (req.method) {
-                case "GET":
-                case "HEAD":
-                    respondIndex(res);
-                    break;
-                
-                case "POST":
-                    postToIndex(req, res);
-                    break;
-
-                default:
-                    res.writeHead(501, { "Content-Type": "text/plain" });
-                    res.end("Error 501: Server has no implementation to handle " + req.method + ".");
-                    break;
+                case "GET": case "HEAD":    respondIndex(res);      break;
+                case "POST":                postToIndex(req, res);  break;
+                default:                    respond400(req, res);   break;
             }
 
         } else if (req.url.substring(0, 8) == "/thread/") {
 
             switch (req.method) {
-                case "GET":
-                case "HEAD":
-                    respondThread(res, req.url.substring(8));
-                    break;
-                
-                case "POST":
-                    postToThread(req, res, req.url.substring(8));
-                    break;
-
-                default:
-                    res.writeHead(501, { "Content-Type": "text/plain" });
-                    res.end("Error 501: Server has no implementation to handle " + req.method + " " + req.url);
-                    break;
+                case "GET": case "HEAD":    respondThread(res, req.url.substring(8));       break;
+                case "POST":                postToThread(req, res, req.url.substring(8));   break;
+                default:                    respond400(req, res);                           break;
             }
 
         } else if (req.url.substring(0, 5) == "/img/") {
 
             switch (req.method) {
-                case "GET":
-                case "HEAD":
-                    respondImage(res, req.url);
-                    break;
+                case "GET": case "HEAD":    respondImage(res, req.url); break;
 
-                default:
-                    res.writeHead(501, { "Content-Type": "text/plain" });
-                    res.end("Error 501: Server has no implementation to handle " + req.method + " " + req.url);
-                    break;
+                default:                    respond400(req, res);       break;
             }
 
         } else {
 
             // no endpoints matched
-            res.writeHead(400, { "Content-Type": "text/plain" });
-            res.end("Error 400: Bad request endpoint\n" + req.method + " " + req.url);
+            respond400(req, res);
         }
 
     } catch (err) {
 
+        // something went wrong, and it's not the client's fault this time!
         res.writeHead(500, { "Content-Type": "text/plain" });
         res.end("500 Internal Server Error\n" + err);
     }
