@@ -82,7 +82,7 @@ function respond400(req, res) {
     res.end("Error 400: Bad request endpoint\n" + req.method + " " + req.url);
 }
 
-function post(req, onExcessivelyHeavy, onSuccessfulRead) {
+function post(req, maxBytes, onExcessivelyHeavy, onSuccessfulRead) {
 
     var body = "";
     var didRespond = false;
@@ -92,7 +92,7 @@ function post(req, onExcessivelyHeavy, onSuccessfulRead) {
         body += data;
 
         // Too much POST data, kill the connection!
-        if (!didRespond && body.length > 1e6) {
+        if (!didRespond && body.length > maxBytes) {
             onExcessivelyHeavy();
             didRespond = true;
         }
@@ -111,6 +111,7 @@ function postToIndex(req, res) {
 
     post(
         req,
+        1e6,
         function () {
             respondIndex(res, "Post data too heavy! Try again with fewer bytes!");
         },
@@ -150,6 +151,7 @@ function postToThread(req, res, threadID) {
 
     post(
         req,
+        1e7,
         function () {
             respondThread(res, threadID, "Upload too heavy!");
         },

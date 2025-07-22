@@ -15,11 +15,11 @@
         function imageBitmapToBase64(imageBitmap) {
 
             const canvas = document.createElement("canvas");
-            canvas.width = 512;
-            canvas.height = canvas.width * imageBitmap.height / imageBitmap.width;
+            canvas.width = imageBitmap.width;
+            canvas.height = imageBitmap.height;
 
             const ctx = canvas.getContext("2d");
-            ctx.drawImage(imageBitmap, 0, 0, canvas.width, canvas.height);
+            ctx.drawImage(imageBitmap, 0, 0);
             
             return canvas.toDataURL("image/png");
         }
