@@ -38,6 +38,36 @@ function respondIndex(res, error = "") {
     res.end(indexText);
 }
 
+function respondThread(res, threadID, error = "") {
+
+    var threadText = fs.readFileSync("html/thread.html", "utf8");
+
+    threadText = threadText.replace("<!-- ERROR -->", error);
+
+    var thread = db.threads[threadID];
+
+    threadText = threadText.replace("<!-- TITLE -->", thread.title);
+
+    for (const postID in thread.posts) {
+
+        var post = thread.posts[postID];
+
+        var postText = fs.readFileSync("html/thread_post.htm", "utf8")
+                .replace("<!-- MESSAGE -->", post.message)
+                .replace("<!-- META -->", "10th 4/2025 4:20pm (#" + postID + ")");
+
+        if (post.images != undefined)
+            for (const img of post.images)
+                postText = inject(postText, "<!-- IMAGES -->", "<img src='/img/" + img + "'>");
+
+        threadText = inject(threadText, "<!-- POSTS -->", postText);
+    }
+
+    // respond
+    res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+    res.end(threadText);
+}
+
 function postToIndex(req, res) {
 
     var body = "";
@@ -91,51 +121,26 @@ function postToIndex(req, res) {
     });
 }
 
-function respondThread(res, threadID) {
-
-    var threadText = fs.readFileSync("html/thread.html", "utf8");
-
-    var thread = db.threads[threadID];
-
-    threadText = threadText.replace("<!-- TITLE -->", thread.title);
-
-    for (const postID in thread.posts) {
-
-        var post = thread.posts[postID];
-
-        var postText = fs.readFileSync("html/thread_post.htm", "utf8")
-                .replace("<!-- MESSAGE -->", post.message)
-                .replace("<!-- META -->", "10th 4/2025 4:20pm (#" + postID + ")");
-
-        if (post.images != undefined)
-            for (const img of post.images)
-                postText = inject(postText, "<!-- IMAGES -->", "<img src='/img/" + img + "'>");
-
-        threadText = inject(threadText, "<!-- POSTS -->", postText);
-    }
-
-    // respond
-    res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-    res.end(threadText);
-}
-
 function postToThread(req, res, threadID) {
 
     var body = "";
+    var didRespond = false;
 
     req.on("data", function (data) {
 
         body += data;
 
         // Too much POST data, kill the connection!
-        if (body.length > 1e7) {
-            console.log("Too much POST data, kill the connection!");
-            req.socket.destroy();
-            // respondThread(res, threadID, "Upload too heavy!");
+        if (!didRespond && body.length > 1e6) {
+            respondThread(res, threadID, "Upload too heavy!");
+            didRespond = true;
         }
     });
 
     req.on("end", function () {
+
+        if (didRespond)
+            return;
 
         // process post data
         var post = qs.parse(body);
