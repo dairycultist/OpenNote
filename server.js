@@ -38,6 +38,53 @@ function respondIndex(res, error = "") {
     res.end(indexText);
 }
 
+function postIndex(req, res) {
+
+    var body = "";
+
+    req.on("data", function (data) {
+
+        body += data;
+
+        // Too much POST data, kill the connection!
+        if (body.length > 1e6)
+            req.socket.destroy();
+    });
+
+    req.on("end", function () {
+
+        // process post data
+        var post = qs.parse(body);
+
+        if (post.title == undefined || post.title.trim().length == 0) {
+            respondIndex(res, "Please enter a title!");
+            return;
+        }
+
+        if (post.message == undefined || post.message.trim().length == 0) {
+            respondIndex(res, "Please enter a message!");
+            return;
+        }
+        
+        var threadID = 0;
+
+        while (db.threads[threadID] != undefined) {
+            threadID = Math.floor(Math.random() * 1000);
+        }
+
+        db.threads[threadID] = {
+            "title": post.title,
+            "posts": [
+                {
+                    "message": post.message
+                }
+            ]
+        };
+
+        respondIndex(res);
+    });
+}
+
 function respondThread(res, threadID) {
 
     var threadText = fs.readFileSync("html/thread.html", "utf8");
@@ -70,74 +117,46 @@ const server = createServer((req, res) => {
     try {
 
         // match endpoints
-        if (req.method == "GET" || req.method == "HEAD") {
+        if (req.url == "/") {
 
-            if (req.url == "/") {
-
-                respondIndex(res);
-
-            } else if (req.url.substring(0, 8) == "/thread/") {
-
-                respondThread(res, req.url.substring(8));
-
-            } else {
-
-                // no endpoints matched
-                res.writeHead(400, { "Content-Type": "text/plain" });
-                res.end("Error 400: Bad request endpoint\n" + req.method + " " + req.url);
-            }
-        
-        } else if (req.method == "POST") {
-
-            var body = "";
-
-            req.on("data", function (data) {
-
-                body += data;
-
-                // Too much POST data, kill the connection!
-                if (body.length > 1e6)
-                    req.socket.destroy();
-            });
-
-            req.on("end", function () {
-
-                // process post data
-                var post = qs.parse(body);
-
-                if (post.title == undefined || post.title.trim().length == 0) {
-                    respondIndex(res, "Please enter a title!");
-                    return;
-                }
-
-                if (post.message == undefined || post.message.trim().length == 0) {
-                    respondIndex(res, "Please enter a message!");
-                    return;
-                }
+            switch (req.method) {
+                case "GET":
+                case "HEAD":
+                    respondIndex(res);
+                    break;
                 
-                var threadID = 0;
+                case "POST":
+                    postIndex(req, res);
+                    break;
 
-                while (db.threads[threadID] != undefined) {
-                    threadID = Math.floor(Math.random() * 1000);
-                }
+                default:
+                    res.writeHead(501, { "Content-Type": "text/plain" });
+                    res.end("Error 501: Server has no implementation to handle " + req.method + ".");
+                    break;
+            }
 
-                db.threads[threadID] = {
-                    "title": post.title,
-                    "posts": [
-                        {
-                            "message": post.message
-                        }
-                    ]
-                };
+        } else if (req.url.substring(0, 8) == "/thread/") {
 
-                respondIndex(res);
-            });
+            switch (req.method) {
+                case "GET":
+                case "HEAD":
+                    respondThread(res, req.url.substring(8));
+                    break;
+                
+                // case "POST":
+                //     break;
 
-        // unimplemented request method
+                default:
+                    res.writeHead(501, { "Content-Type": "text/plain" });
+                    res.end("Error 501: Server has no implementation to handle " + req.method + ".");
+                    break;
+            }
+
         } else {
 
-            res.writeHead(501, { "Content-Type": "text/plain" });
-            res.end("Error 501: Server has no implementation to handle " + req.method + ".");
+            // no endpoints matched
+            res.writeHead(400, { "Content-Type": "text/plain" });
+            res.end("Error 400: Bad request endpoint\n" + req.method + " " + req.url);
         }
 
     } catch (err) {
@@ -157,19 +176,7 @@ server.listen(port, hostname, () => {
     } catch (err) {
 
         db = {
-            "threads": {
-                "0": {
-                    "title": "houseMD",
-                    "posts": [
-                        {
-                            "message": "I like beans"
-                        },
-                        {
-                            "message": "me 2"
-                        }
-                    ]
-                }
-            }
+            "threads": {}
         };
     }
 
