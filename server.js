@@ -13,6 +13,59 @@ function inject(medium, target, data) {
     return medium.replace(target, data + target);
 }
 
+function respondIndex(res, error = "") {
+
+    var indexText = fs.readFileSync("html/index.html", "utf8");
+
+    indexText = indexText.replace("<!-- ERROR -->", error);
+
+    for (const threadID in db.threads) {
+
+        var thread = db.threads[threadID];
+
+        var threadText = fs.readFileSync("html/thread_mini.htm", "utf8");
+
+        threadText = threadText.replace("<!-- TITLE -->", thread.title);
+        threadText = threadText.replace("<!-- ID -->", threadID);
+        threadText = threadText.replace("<ID>", threadID);
+        threadText = threadText.replace("<!-- MESSAGE -->", thread.posts[0].message);
+
+        indexText = inject(indexText, "<!-- THREADS -->", threadText);
+    }
+
+    // respond
+    res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+    res.end(indexText);
+}
+
+function respondThread(res, threadID) {
+
+    var threadText = fs.readFileSync("html/thread.html", "utf8");
+
+    var thread = db.threads[threadID];
+
+    threadText = threadText.replace("<!-- TITLE -->", thread.title);
+    threadText = threadText.replace("<!-- ID -->", threadID);
+    threadText = threadText.replace("<!-- MESSAGE -->", thread.posts[0].message);
+
+    // for (const postID in thread.posts) {
+
+    //     var post = thread.posts[postID];
+
+    //     threadText = inject(
+    //         threadText,
+    //         "<!-- POSTS -->",
+    //         fs.readFileSync("html/thread_post.htm", "utf8")
+    //             .replace("<!-- MESSAGE -->", post.message)
+    //             .replace("<!-- META -->", "#" + postID + "<br>10th 4/2025 4:20pm")
+    //     );
+    // }
+
+    // respond
+    res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+    res.end(threadText);
+}
+
 const server = createServer((req, res) => {
 
     try {
@@ -20,45 +73,17 @@ const server = createServer((req, res) => {
         // match endpoints
         if (req.method == "GET" || req.method == "HEAD") {
 
-            // index.html
             if (req.url == "/") {
 
-                var indexText = fs.readFileSync("html/index.html", "utf8");
+                respondIndex(res);
 
-                for (const threadID in db.threads) {
+            } else if (req.url.substring(0, 8) == "/thread/") {
 
-                    var thread = db.threads[threadID];
+                respondThread(res, req.url.substring(8));
 
-                    var threadText = fs.readFileSync("html/thread_wrapper.htm", "utf8");
-
-                    threadText = threadText.replace("<!-- TITLE -->", thread.title);
-                    threadText = threadText.replace("<!-- ID -->", threadID);
-
-                    for (const postID in thread.posts) {
-
-                        var post = thread.posts[postID];
-
-                        threadText = inject(
-                            threadText,
-                            "<!-- POSTS -->",
-                            fs.readFileSync("html/thread_post.htm", "utf8")
-                                .replace("<!-- MESSAGE -->", post.message)
-                                .replace("<!-- META -->", "#" + postID + "<br>10th 4/2025 4:20pm")
-                        );
-                    }
-
-                    indexText = inject(indexText, "<!-- THREADS -->", threadText);
-                }
-
-                // respond
-                res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-                res.end(indexText);
-
-            // TODO handle /image/ID and /thread/ID
-
-            // no endpoints matched
             } else {
 
+                // no endpoints matched
                 res.writeHead(400, { "Content-Type": "text/plain" });
                 res.end("Error 400: Bad request endpoint\n" + req.method + " " + req.url);
             }
@@ -80,6 +105,16 @@ const server = createServer((req, res) => {
 
                 // process post data
                 var post = qs.parse(body);
+
+                if (post.title == undefined || post.title.trim().length == 0) {
+                    respondIndex(req, res, "Please enter a title!");
+                    return;
+                }
+
+                if (post.message == undefined || post.message.trim().length == 0) {
+                    respondIndex(req, res, "Please enter a message!");
+                    return;
+                }
                 
                 var threadID = 0;
 
@@ -88,19 +123,15 @@ const server = createServer((req, res) => {
                 }
 
                 db.threads[threadID] = {
-                    "title": post["title"],
+                    "title": post.title,
                     "posts": [
                         {
-                            "message": post["firstmessage"]
+                            "message": post.message
                         }
                     ]
                 };
 
-                res.writeHead(200, { "Content-Type": "text/plain" });
-                res.end("");
-
-                // redirect to page they came from
-
+                respondIndex(req, res);
             });
 
         // unimplemented request method
@@ -110,11 +141,10 @@ const server = createServer((req, res) => {
             res.end("Error 501: Server has no implementation to handle " + req.method + ".");
         }
 
-    // error reading file
     } catch (err) {
 
-        res.writeHead(404, { "Content-Type": "text/plain" });
-        res.end("Error 404: " + err);
+        res.writeHead(500, { "Content-Type": "text/plain" });
+        res.end("500 Internal Server Error\n" + err);
     }
 });
 

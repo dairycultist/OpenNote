@@ -2,66 +2,41 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Title of the document</title>
-    <style>
-        body { color: #444; width: 900px; margin: auto; font-family: sans-serif; }
-        
-        
-        .thread { margin: 1em 0; border: 3px outset #390; width: 100%; border-spacing: 0; border-radius: 6px; }
-        .thread th { white-space: nowrap; text-shadow: 0 0 6px black, 0 0 6px black; text-align: left; padding: 0.75em; color: white; }
-        .thread td { padding: 1em; vertical-align: top; }
-        .thread td + td { color: #bbb; text-align: right; white-space: nowrap; }
-        .thread tr:nth-child(odd) { background: #eee; }
-        .thread tr:first-of-type, .thread tr:last-of-type { background: linear-gradient(to right, #390, #9F6); }
-
-
-        button, input[type="submit"] {
-            color: #444; padding: 0.2em 1em; font-weight: 700; border: 1.5px solid orange; border-radius: 4px; background: linear-gradient(to top, #FFC, #FD9, #FFC);
-            cursor: pointer;
-        }
-        button:hover, input[type="submit"]:hover {
-            background: linear-gradient(to top, #FFC, #FD9);
-        }
-        button:active, input[type="submit"]:active {
-            background: linear-gradient(to top, #FEA, #FB7);
-        }
-    </style>
+    <title>Index</title>
 </head>
 <body>
 
-    <div style="text-align: center;">
+    <div style="width: 20em; margin: auto;">
         <img src="https://web.archive.org/web/20091027081552im_/http://hk.geocities.com/cliff072002/girlp4798.gif">
         <h1>anonymous forum</h1>
-        <button>Random thread</button>
-        <button>Random image</button>
+
+        <form action="/" method="post">
+            <table>
+                <tr>
+                    <th>
+                        <label for="title">Thread Title</label>
+                    </th>
+                    <td>
+                        <input type="text" id="title" name="title" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="message">Message</label>
+                    </th>
+                    <td>
+                        <textarea type="text" id="message" name="message" value=""></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" value="Post">
+                        <span style="color: red;"><!-- ERROR --></span>
+                    </td>
+                </tr>
+            </table>
+        </form>
     </div>
-
-    <form action="make_thread" method="post">
-
-        <table>
-            <tr>
-                <th>
-                    <label for="title">Thread Title</label>
-                </th>
-                <td>
-                    <input type="text" id="title" name="title" value="">
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    <label for="firstmessage">Message</label>
-                </th>
-                <td>
-                    <textarea type="text" id="firstmessage" name="firstmessage" value=""></textarea>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <input type="submit" value="Post">
-                </td>
-            </tr>
-        </table>
-    </form>
 
     <!-- THREADS -->
 
