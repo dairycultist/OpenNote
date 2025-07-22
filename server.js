@@ -209,7 +209,6 @@ const server = createServer((req, res) => {
 
             switch (req.method) {
                 case "GET": case "HEAD":    respondImage(res, req.url); break;
-
                 default:                    respond400(req, res);       break;
             }
 

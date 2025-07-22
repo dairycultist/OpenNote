@@ -26,6 +26,11 @@
 
         async function updateImages() {
 
+            var submit = document.getElementById("submit");
+            
+            submit.disabled = true;
+            submit.value = "Processing images...";
+
             var x = document.getElementById("images");
             var txt = "";
             var base64List = "";
@@ -60,6 +65,9 @@
 
             document.getElementById("base64").value = base64List;
             document.getElementById("imagespreview").innerHTML = txt;
+            
+            submit.disabled = false;
+            submit.value = "Add Post";
         }
 
     </script>
@@ -98,7 +106,7 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <input type="submit" value="Add Post">
+                    <input type="submit" id="submit" value="Add Post">
                     <span style="color: red;"><!-- ERROR --></span>
                 </td>
             </tr>
