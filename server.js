@@ -265,13 +265,20 @@ server.listen(config.port, config.hostname, () => {
         };
     }
 
-    // TODO start async thread such that every secondsBetweenBackup seconds, server data json is saved
-    // try {
-    //     fs.writeFileSync("db.json", JSON.stringify(db));
-    //     console.log("Database saved!");
-    // } catch (err) {
-    //     console.error("Error saving database!");
-    // }
+    // start async interval such that every secondsBetweenBackup seconds, server data json is saved
+    setInterval(() => {
+
+        var date = new Date(Date.now());
+        console.log(`[${date.toLocaleDateString() + " " + date.toLocaleTimeString()}] Beginning overwrite of database file!`);
+
+        try {
+            fs.writeFileSync("db.json", JSON.stringify(db));
+            console.log("Database saved!");
+        } catch (err) {
+            console.error("Error saving database!");
+        }
+
+    }, config.secondsBetweenBackup * 1000);
 
     console.log(`Starting @ http://${config.hostname}:${config.port}/`);
 });
