@@ -18,6 +18,7 @@ function respondIndex(res, error = "") {
     indexText = indexText.replace("<!-- ERROR -->", error);
     indexText = indexText.replace("<!-- SITE_NAME -->", config.siteName);
     indexText = indexText.replace("<!-- SITE_NAME -->", config.siteName);
+    indexText = indexText.replace("<!-- SITE_IMG -->", config.siteImg);
 
     for (const threadID in db.threads) {
 
