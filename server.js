@@ -75,7 +75,7 @@ function respondThread(res, threadID, error = "") {
 
         if (post.images != undefined)
             for (const img of post.images)
-                postText = inject(postText, "<!-- IMAGES -->", "<img src='/img/" + img + "'>");
+                postText = inject(postText, "<!-- IMAGES -->", "<img src='/db/img/" + img + "'>");
 
         threadText = inject(threadText, "<!-- POSTS -->", postText);
     }
@@ -188,7 +188,7 @@ function postToThread(req, res, threadID) {
 
             const base64Parts = post.base64.split(";");
             for (const i in base64Parts) {
-                fs.writeFileSync("img/" + post.images[i], Buffer.from(base64Parts[i], "base64"));
+                fs.writeFileSync("db/img/" + post.images[i], Buffer.from(base64Parts[i], "base64"));
             }
 
             if (post.message == undefined || post.message.trim().length == 0) {
@@ -230,7 +230,7 @@ const server = createServer((req, res) => {
                 default:                    respond400(req, res);                           break;
             }
 
-        } else if (req.url.substring(0, 5) == "/img/") {
+        } else if (req.url.substring(0, 8) == "/db/img/") {
 
             switch (req.method) {
                 case "GET": case "HEAD":    respondImage(res, req.url); break;
@@ -256,7 +256,7 @@ server.listen(config.port, config.hostname, () => {
     // read server data json into program, or create it if it doesn't exist
     try {
 
-        db = JSON.parse(fs.readFileSync("db.json", "utf8"));
+        db = JSON.parse(fs.readFileSync("db/db.json", "utf8"));
 
     } catch (err) {
 
@@ -272,7 +272,7 @@ server.listen(config.port, config.hostname, () => {
         console.log(`[${date.toLocaleDateString() + " " + date.toLocaleTimeString()}] Beginning overwrite of database file!`);
 
         try {
-            fs.writeFileSync("db.json", JSON.stringify(db));
+            fs.writeFileSync("db/db.json", JSON.stringify(db));
             console.log("Database saved!");
         } catch (err) {
             console.error("Error saving database!");
