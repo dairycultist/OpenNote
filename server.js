@@ -11,6 +11,10 @@ function inject(medium, target, data) {
     return medium.replace(target, data + target);
 }
 
+function jsTimeFormat(unix) {
+    return `<script>var date = new Date(${unix}); document.write(date.toLocaleDateString() + " " + date.toLocaleTimeString());</script>`;
+}
+
 function respondIndex(res, error = "") {
 
     var indexText = fs.readFileSync("html/index.html", "utf8");
@@ -31,6 +35,7 @@ function respondIndex(res, error = "") {
             .replace("<!-- TITLE -->", thread.title)
             .replace("<!-- ID -->", threadID)
             .replace("<ID>", threadID)
+            .replace("<!-- CREATED -->", jsTimeFormat(thread.posts[0].unixtime))
             .replace("<!-- MESSAGE -->", thread.posts[0].message)
         ;
 
@@ -65,7 +70,7 @@ function respondThread(res, threadID, error = "") {
         var postText =
             fs.readFileSync("html/thread_post.htm", "utf8")
             .replace("<!-- MESSAGE -->", post.message)
-            .replace("<!-- META -->", "10th 4/2025 4:20pm (#" + postID + ")")
+            .replace("<!-- META -->", `${jsTimeFormat(post.unixtime)} (#${postID})`)
         ;
 
         if (post.images != undefined)
@@ -149,7 +154,8 @@ function postToIndex(req, res) {
                 "title": post.title,
                 "posts": [
                     {
-                        "message": post.message
+                        "message": post.message,
+                        "unixtime": Date.now()
                     }
                 ]
             };
@@ -193,7 +199,8 @@ function postToThread(req, res, threadID) {
             db.threads[threadID].posts.push(
                 {
                     "message": post.message,
-                    "images": post.images
+                    "images": post.images,
+                    "unixtime": Date.now()
                 }
             );
 
