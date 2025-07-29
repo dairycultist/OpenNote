@@ -253,6 +253,16 @@ const server = createServer((req, res) => {
 
 server.listen(config.port, config.hostname, () => {
 
+    // ensure required db directories exist
+    if (!fs.existsSync("./db/img")) {
+
+        try {
+            fs.mkdirSync("./db/img", { recursive: true });
+        } catch (err) {
+            console.error("Error initializing database filesystem: ", err);
+        }
+    }
+
     // read server data json into program, or create it if it doesn't exist
     try {
 
