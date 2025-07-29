@@ -2,7 +2,6 @@ const fs = require("fs");
 const qs = require("querystring");
 const { createServer } = require("node:http");
 
-const secondsBetweenBackup = 60;
 const config = JSON.parse(fs.readFileSync("config.json", "utf8"));
 
 var db = {};
@@ -17,6 +16,8 @@ function respondIndex(res, error = "") {
     var indexText = fs.readFileSync("html/index.html", "utf8");
 
     indexText = indexText.replace("<!-- ERROR -->", error);
+    indexText = indexText.replace("<!-- TITLE -->", config.title);
+    indexText = indexText.replace("<!-- TITLE -->", config.title);
 
     for (const threadID in db.threads) {
 
