@@ -198,9 +198,8 @@ function postToThread(req, res, threadID) {
 
                 while (fs.existsSync("./db/img/" + post.images[i])) {
 
-                    var pos = post.images[i].lastIndexOf(".");
-
-                    post.images[i] = post.images[i].split(0, pos) + Math.floor(Math.random() * 10) + post.images[i].split(pos);
+                    // append a random number
+                    post.images[i] = Math.floor(Math.random() * 10) + post.images[i];
                 }
 
                 fs.writeFileSync("db/img/" + post.images[i], Buffer.from(base64Parts[i], "base64"));
