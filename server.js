@@ -134,8 +134,14 @@ function postToIndex(req, res) {
         },
         function (post) {
 
+            // validate
             if (post.title == undefined || post.title.trim().length == 0) {
                 respondIndex(res, "Please enter a title!");
+                return;
+            }
+
+            if (post.title.trim().length > 80) {
+                respondIndex(res, "Title must be >=80 characters!");
                 return;
             }
 
@@ -143,6 +149,10 @@ function postToIndex(req, res) {
                 respondIndex(res, "Please enter a message!");
                 return;
             }
+
+            // create thread with unique id
+            post.title = post.title.trim();
+            post.message = post.message.trim();
             
             var threadID = 0;
 
