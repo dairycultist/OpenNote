@@ -15,21 +15,24 @@ function respondIndex(res, error = "") {
 
     var indexText = fs.readFileSync("html/index.html", "utf8");
 
-    indexText = indexText.replace("<!-- ERROR -->", error);
-    indexText = indexText.replace("<!-- SITE_NAME -->", config.siteName);
-    indexText = indexText.replace("<!-- SITE_NAME -->", config.siteName);
-    indexText = indexText.replace("<!-- SITE_IMG -->", config.siteImg);
+    indexText = indexText
+        .replace("<!-- ERROR -->", error)
+        .replace("<!-- SITE_NAME -->", config.siteName)
+        .replace("<!-- SITE_NAME -->", config.siteName)
+        .replace("<!-- SITE_IMG -->", config.siteImg)
+    ;
 
     for (const threadID in db.threads) {
 
         var thread = db.threads[threadID];
 
-        var threadText = fs.readFileSync("html/thread_mini.htm", "utf8");
-
-        threadText = threadText.replace("<!-- TITLE -->", thread.title);
-        threadText = threadText.replace("<!-- ID -->", threadID);
-        threadText = threadText.replace("<ID>", threadID);
-        threadText = threadText.replace("<!-- MESSAGE -->", thread.posts[0].message);
+        var threadText =
+            fs.readFileSync("html/thread_mini.htm", "utf8")
+            .replace("<!-- TITLE -->", thread.title)
+            .replace("<!-- ID -->", threadID)
+            .replace("<ID>", threadID)
+            .replace("<!-- MESSAGE -->", thread.posts[0].message)
+        ;
 
         indexText = inject(indexText, "<!-- THREADS -->", threadText);
     }
@@ -43,21 +46,27 @@ function respondThread(res, threadID, error = "") {
 
     var threadText = fs.readFileSync("html/thread.html", "utf8");
 
-    threadText = threadText.replace("<!-- ERROR -->", error);
-    threadText = threadText.replace("<!-- SITE_NAME -->", config.siteName);
+    threadText = threadText
+        .replace("<!-- ERROR -->", error)
+        .replace("<!-- SITE_NAME -->", config.siteName)
+    ;
 
     var thread = db.threads[threadID];
 
-    threadText = threadText.replace("<!-- TITLE -->", thread.title);
-    threadText = threadText.replace("<!-- TITLE -->", thread.title);
+    threadText = threadText
+        .replace("<!-- TITLE -->", thread.title)
+        .replace("<!-- TITLE -->", thread.title)
+    ;
 
     for (const postID in thread.posts) {
 
         var post = thread.posts[postID];
 
-        var postText = fs.readFileSync("html/thread_post.htm", "utf8")
-                .replace("<!-- MESSAGE -->", post.message)
-                .replace("<!-- META -->", "10th 4/2025 4:20pm (#" + postID + ")");
+        var postText =
+            fs.readFileSync("html/thread_post.htm", "utf8")
+            .replace("<!-- MESSAGE -->", post.message)
+            .replace("<!-- META -->", "10th 4/2025 4:20pm (#" + postID + ")")
+        ;
 
         if (post.images != undefined)
             for (const img of post.images)
@@ -114,7 +123,7 @@ function postToIndex(req, res) {
 
     post(
         req,
-        1e6,
+        1e6, // 1mb
         function () {
             respondIndex(res, "Post data too heavy! Try again with fewer bytes!");
         },
@@ -154,7 +163,7 @@ function postToThread(req, res, threadID) {
 
     post(
         req,
-        1e7,
+        1e7, // 10mb, maybe make this configurable later
         function () {
             respondThread(res, threadID, "Upload too heavy!");
         },
