@@ -175,6 +175,13 @@ function postToThread(req, res, threadID) {
         },
         function (post) {
 
+            // fail if message is invalid
+            if (post.message == undefined || post.message.trim().length == 0) {
+                respondThread(res, req.url.substring(8));
+                return;
+            }
+
+            // save images to db
             if (!Array.isArray(post.images)) {
 
                 if (post.images.trim().length == 0) {
@@ -184,16 +191,19 @@ function postToThread(req, res, threadID) {
                 }
             }
 
-            // maybe limit the number of images you can post per post
-
             const base64Parts = post.base64.split(";");
-            for (const i in base64Parts) {
-                fs.writeFileSync("db/img/" + post.images[i], Buffer.from(base64Parts[i], "base64"));
-            }
+            base64Parts.pop(); // remove last one, which is always empty
 
-            if (post.message == undefined || post.message.trim().length == 0) {
-                respondThread(res, req.url.substring(8));
-                return;
+            for (const i in base64Parts) {
+
+                while (fs.existsSync("./db/img/" + post.images[i])) {
+
+                    var pos = post.images[i].lastIndexOf(".");
+
+                    post.images[i] = post.images[i].split(0, pos) + Math.floor(Math.random() * 10) + post.images[i].split(pos);
+                }
+
+                fs.writeFileSync("db/img/" + post.images[i], Buffer.from(base64Parts[i], "base64"));
             }
 
             db.threads[threadID].posts.push(
