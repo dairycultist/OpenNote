@@ -1,5 +1,5 @@
 {
-    "title": "Fatfur Forum",
+    "siteName": "Fatfur Forum",
     "hostname": "0.0.0.0",
     "port": 80,
     "secondsBetweenBackup": 60
