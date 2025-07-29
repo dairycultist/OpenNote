@@ -2,9 +2,8 @@ const fs = require("fs");
 const qs = require("querystring");
 const { createServer } = require("node:http");
 
-const hostname = "localhost";
-const port = 3000;
 const secondsBetweenBackup = 60;
+const config = JSON.parse(fs.readFileSync("config.json", "utf8"));
 
 var db = {};
 
@@ -232,7 +231,7 @@ const server = createServer((req, res) => {
     }
 });
 
-server.listen(port, hostname, () => {
+server.listen(config.port, config.hostname, () => {
 
     // read server data json into program, or create it if it doesn't exist
     try {
@@ -254,5 +253,5 @@ server.listen(port, hostname, () => {
     //     console.error("Error saving database!");
     // }
 
-    console.log(`Starting @ http://${hostname}:${port}/`);
+    console.log(`Starting @ http://${config.hostname}:${config.port}/`);
 });
