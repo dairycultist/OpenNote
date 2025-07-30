@@ -6,6 +6,17 @@ Server: TypeScript (JS) which listens to requests and stores information in an S
 
 Invite-only blogging/art platform.
 
+```
+running on server:
+
+we want to make the process ignore the SIGHUP signal that is emitted when the terminal session ends. thus we use nohup
+
+nohup sudo node server.js &
+ctrl+Z (to suspend the process we just made)
+bg (send it to background)
+disown (detach it from shell)
+```
+
 ---
 
 are anonymous or logged-in imageboards/forums better? would people use a forum I make if it was dedicated to sharing images of fat anime girls and furries
