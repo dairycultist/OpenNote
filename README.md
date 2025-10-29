@@ -7,6 +7,16 @@ Server: TypeScript (JS) which listens to requests and stores information in an S
 Invite-only blogging/art platform.
 
 ```
+social media just for the gang to post fat arts
+id make it open source and add a threat model so that I can ensure security to my standard
+it'd be closed access so only you guys can use it
+
+zmity what if I made a social media :3
+and you can post images but only as links to deviantart images :3c
+blog :3c
+```
+
+```
 running on server:
 
 we want to make the process ignore the SIGHUP signal that is emitted when the terminal session ends. thus we use nohup
