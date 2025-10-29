@@ -39,36 +39,22 @@ function postToIndex(db, config, req, res) {
         function (post) {
 
             // validate
-            if (post.title == undefined || post.title.trim().length == 0) {
-                respondIndex(db, config, res, "Please enter a title!");
-                return;
-            }
-
-            if (post.title.trim().length > 80) {
-                respondIndex(db, config, res, "Title must be >=80 characters!");
-                return;
-            }
-
             if (post.message == undefined || post.message.trim().length == 0) {
                 respondIndex(db, config, res, "Please enter a message!");
                 return;
             }
 
             // create thread with unique id
-            post.title = post.title.trim();
-            post.message = post.message.trim();
-            
             var threadID = 0;
 
-            while (db.threads[threadID] != undefined) {
+            while (db.threads[threadID] != undefined)
                 threadID = Math.floor(Math.random() * 1000);
-            }
 
             db.threads[threadID] = {
-                "title": post.title,
+                "title": "",
                 "posts": [
                     {
-                        "message": post.message,
+                        "message": post.message.trim(),
                         "unixtime": Date.now()
                     }
                 ]
@@ -97,8 +83,15 @@ function postToThread(db, config, req, res, threadID) {
 
 		let images = [];
 
-		for (const file of files.images)
-			images.push(file.path.substring(file.path.lastIndexOf("/") + 1));
+		for (const file of files.images) {
+
+			if (file.size > 0) {
+				images.push(file.path.substring(file.path.lastIndexOf("/") + 1));
+			} else {
+				// multiparty will make a 0-byte file if no file is passed through the request, just delete it
+				fs.unlinkSync("./" + file.path);
+			}
+		}
 
 		db.threads[threadID].posts.push(
 			{

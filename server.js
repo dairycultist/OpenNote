@@ -11,7 +11,8 @@ const server = createServer((req, res) => {
 
     try {
 
-		// TODO add auth endpoint
+		// TODO add login endpoint
+		// authentication cookie-checking is performed here, not by any sensitive functions
 
         // match endpoints
         if (req.url == "/") {

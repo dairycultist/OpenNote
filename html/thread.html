@@ -4,29 +4,20 @@
     <meta charset="UTF-8">
     <title>Plump Plaza | <!-- TITLE --></title>
     <style>
-        body { width: 900px; margin: auto; font-family: sans-serif; background: #edf2f4; line-height: 1.25em; }
-        
-        .post { margin-top: 2px; background: white; padding: 1em; }
-
-        .post:first-of-type { background: transparent; padding: 0; }
-        .post:first-of-type .message { font-size: 1.2em; line-height: 1.25em; }
-        
-        .meta { color: #999; font-size: 0.8em; margin-bottom: 1em; }
-        .images { display: flex; flex-wrap: wrap; margin-top: 1em; }
-
-        img { height: 200px; }
+        img { max-height: 200px; max-width: 300px; }
+		.post { border-bottom: 1px solid grey; padding-bottom: 1em; }
     </style>
     <script>
+
+		function clearImages() {
+			document.getElementById("images").value = "";
+			updateImages();
+		}
 		
         async function updateImages() {
 
-            var submit = document.getElementById("submit");
-            
-            submit.disabled = true;
-            submit.value = "Processing images...";
-
             var x = document.getElementById("images");
-            var txt = "";
+            var preview = "";
 
             if ("files" in x) {
 
@@ -34,29 +25,26 @@
 
                     for (var i = 0; i < x.files.length; i++) {
 
-                        txt += "<br><strong>" + (i+1) + ". ";
+                        preview += "<br><strong>" + (i+1) + ". ";
                         var file = x.files[i];
 
                         if ("name" in file)
-                            txt += file.name;
+                            preview += file.name;
 
                         if ("size" in file)
-                            txt += " (" + (file.size / 1000) + "KB)";
+                            preview += " (" + (file.size / 1000) + "KB)";
 
-                        txt += "</strong><br>";
+                        preview += "</strong><br>";
 
-                        txt += "<img src='" + URL.createObjectURL(file) + "'>";
+                        preview += "<img src='" + URL.createObjectURL(file) + "'>";
                     }
                 }
 
             } else if (x.value != "") {
-                txt = "Your browser does not support file reading.";
+                preview = "Your browser does not support file reading.";
             }
 
-            document.getElementById("imagespreview").innerHTML = txt;
-            
-            submit.disabled = false;
-            submit.value = "Add Post";
+            document.getElementById("imagespreview").innerHTML = preview;
         }
 
     </script>
@@ -85,7 +73,7 @@
                 </th>
                 <td>
                     <input type="file" id="images" name="images" multiple accept="image/*" onchange="updateImages()">
-                    <button type="button" onclick="document.getElementById('images').value = ''; updateImages();" form="">Clear</button>
+                    <button type="button" onclick="clearImages()" form="">Clear</button>
                 </td>
             </tr>
             <tr>

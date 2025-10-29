@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Plump Plaza | Login</title>
+</head>
+<body style="display: flex; align-items: center; justify-content: center; height: 100vh; flex-direction: column;">
+
+	<h3>Log in to Plump Plaza</h3>
+
+    <form method="POST">
+		<table>
+			<tr>
+				<th>
+					<label for="username">Username</label>
+				</th>
+				<td>
+					<input type="text" id="username" name="username" required/>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label for="password">Password</label>
+				</th>
+				<td>
+					<input type="password" id="password" name="password" required/>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<input type="submit" value="Log in">
+					<span style="color: red;"><!-- ERROR --></span>
+				</td>
+			</tr>
+		</table>
+	</form>
+
+</body>
+</html>
