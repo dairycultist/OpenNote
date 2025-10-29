@@ -17,19 +17,7 @@
         img { height: 200px; }
     </style>
     <script>
-
-        function imageBitmapToBase64(imageBitmap) {
-
-            const canvas = document.createElement("canvas");
-            canvas.width = imageBitmap.width;
-            canvas.height = imageBitmap.height;
-
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(imageBitmap, 0, 0);
-            
-            return canvas.toDataURL("image/png");
-        }
-
+		
         async function updateImages() {
 
             var submit = document.getElementById("submit");
@@ -39,7 +27,6 @@
 
             var x = document.getElementById("images");
             var txt = "";
-            var base64List = "";
 
             if ("files" in x) {
 
@@ -58,10 +45,7 @@
 
                         txt += "</strong><br>";
 
-                        var base64 = imageBitmapToBase64(await createImageBitmap(file));
-                        
-                        base64List += base64.split(",")[1] + ";"; // remove the data URL prefix to get only the base64 string
-                        txt += "<img src='" + base64 + "'>";
+                        txt += "<img src='" + URL.createObjectURL(file) + "'>";
                     }
                 }
 
@@ -69,7 +53,6 @@
                 txt = "Your browser does not support file reading.";
             }
 
-            document.getElementById("base64").value = base64List;
             document.getElementById("imagespreview").innerHTML = txt;
             
             submit.disabled = false;
@@ -86,8 +69,7 @@
 
     <div><!-- POSTS --></div>
 
-    <form method="post" style="margin-top: 1em; background: white; padding: 1em;">
-        <input type="text" id="base64" name="base64" style="display: none;">
+    <form style="margin-top: 1em; background: white; padding: 1em;" method="POST" enctype="multipart/form-data">
         <table>
             <tr>
                 <th>

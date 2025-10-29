@@ -1,5 +1,6 @@
 const fs = require("fs");
 const qs = require("querystring");
+const multiparty = require("multiparty");
 const { respondIndex, respondThread } = require("./get.js");
 
 function post(req, maxBytes, onExcessivelyHeavy, onSuccessfulRead) {
@@ -80,55 +81,49 @@ function postToIndex(db, config, req, res) {
 
 function postToThread(db, config, req, res, threadID) {
 
-    post(
-        req,
-        1e7, // 10mb, maybe make this configurable later
-        function () {
-            respondThread(db, config, res, threadID, "Upload too heavy!");
-        },
-        function (post) {
+    var form = new multiparty.Form();
 
-            // fail if message is invalid
-            if (post.message == undefined || post.message.trim().length == 0) {
-                respondThread(db, config, res, req.url.substring(8));
-                return;
-            }
+	form.parse(req, function(err, fields, files) {
 
-            // save images to db
-            if (!Array.isArray(post.images)) {
+		console.log(fields);
 
-                if (post.images.trim().length == 0) {
-                    post.images = []; // images will return "" instead of an empty array when there are no images
-                } else {
-                    post.images = [post.images]; // images will return a string instead of an array of one string when there is one image
-                }
-            }
+		// fail if message is invalid
+		if (fields.message == undefined || fields.message.length != 1 || fields.message[0].trim().length == 0) {
+			respondThread(db, config, res, req.url.substring(8), "Something unexpected happened!");
+			return;
+		}
 
-            const base64Parts = post.base64.split(";");
-            base64Parts.pop(); // remove last one, which is always empty
+		respondThread(db, config, res, threadID);
+	});
 
-            for (const i in base64Parts) {
+	// // save images to db
+	// if (!Array.isArray(post.images)) {
 
-                while (fs.existsSync("./db/img/" + post.images[i])) {
+	//     if (post.images.trim().length == 0) {
+	//         post.images = []; // images will return "" instead of an empty array when there are no images
+	//     } else {
+	//         post.images = [post.images]; // images will return a string instead of an array of one string when there is one image
+	//     }
+	// }
 
-                    // append a random number
-                    post.images[i] = Math.floor(Math.random() * 10) + post.images[i];
-                }
+	// for (const i in base64Parts) {
 
-                fs.writeFileSync("db/img/" + post.images[i], Buffer.from(base64Parts[i], "base64"));
-            }
+	//     while (fs.existsSync("./db/img/" + post.images[i])) {
 
-            db.threads[threadID].posts.push(
-                {
-                    "message": post.message,
-                    "images": post.images,
-                    "unixtime": Date.now()
-                }
-            );
+	//         // append a random number
+	//         post.images[i] = Math.floor(Math.random() * 10) + post.images[i];
+	//     }
 
-            respondThread(db, config, res, threadID);
-        }
-    );
+	//     fs.writeFileSync("db/img/" + post.images[i], Buffer.from(base64Parts[i], "base64"));
+	// }
+
+	// db.threads[threadID].posts.push(
+	//     {
+	//         "message": post.message,
+	//         "images": post.images,
+	//         "unixtime": Date.now()
+	//     }
+	// );
 }
 
 module.exports = {
