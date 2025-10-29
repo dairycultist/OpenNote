@@ -13,12 +13,7 @@ function respondIndex(db, config, res, error = "") {
 
     var indexText = fs.readFileSync("html/index.html", "utf8");
 
-    indexText = indexText
-        .replace("<!-- ERROR -->", error)
-        .replace("<!-- SITE_NAME -->", config.siteName)
-        .replace("<!-- SITE_NAME -->", config.siteName)
-        .replace("<!-- SITE_IMG -->", config.siteImg)
-    ;
+    indexText = indexText.replace("<!-- ERROR -->", error);
 
     for (const threadID in db.threads) {
 
@@ -45,10 +40,7 @@ function respondThread(db, config, res, threadID, error = "") {
 
     var threadText = fs.readFileSync("html/thread.html", "utf8");
 
-    threadText = threadText
-        .replace("<!-- ERROR -->", error)
-        .replace("<!-- SITE_NAME -->", config.siteName)
-    ;
+    threadText = threadText.replace("<!-- ERROR -->", error);
 
     var thread = db.threads[threadID];
 

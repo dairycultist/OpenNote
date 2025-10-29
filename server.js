@@ -11,6 +11,8 @@ const server = createServer((req, res) => {
 
     try {
 
+		// TODO add auth endpoint
+
         // match endpoints
         if (req.url == "/") {
 
@@ -43,7 +45,7 @@ const server = createServer((req, res) => {
 
     } catch (err) {
 
-        // something went wrong, and it's not the client's fault this time!
+        // something went wrong, and it's not the client's fault
         res.writeHead(500, { "Content-Type": "text/plain" });
         res.end("500 Internal Server Error\n" + err);
     }
