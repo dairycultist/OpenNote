@@ -81,11 +81,13 @@ function postToIndex(db, config, req, res) {
 
 function postToThread(db, config, req, res, threadID) {
 
-    var form = new multiparty.Form();
+	// https://www.npmjs.com/package/multiparty
+    var form = new multiparty.Form({ autoFiles: true, uploadDir: "./db/img/" });
 
 	form.parse(req, function(err, fields, files) {
 
 		console.log(fields);
+		console.log(files);
 
 		// fail if message is invalid
 		if (fields.message == undefined || fields.message.length != 1 || fields.message[0].trim().length == 0) {
@@ -93,37 +95,21 @@ function postToThread(db, config, req, res, threadID) {
 			return;
 		}
 
+		let images = [];
+
+		for (const file of files.images)
+			images.push(file.path.substring(file.path.lastIndexOf("/") + 1));
+
+		db.threads[threadID].posts.push(
+			{
+				"message": fields.message[0],
+				"images": images,
+				"unixtime": Date.now()
+			}
+		);
+
 		respondThread(db, config, res, threadID);
 	});
-
-	// // save images to db
-	// if (!Array.isArray(post.images)) {
-
-	//     if (post.images.trim().length == 0) {
-	//         post.images = []; // images will return "" instead of an empty array when there are no images
-	//     } else {
-	//         post.images = [post.images]; // images will return a string instead of an array of one string when there is one image
-	//     }
-	// }
-
-	// for (const i in base64Parts) {
-
-	//     while (fs.existsSync("./db/img/" + post.images[i])) {
-
-	//         // append a random number
-	//         post.images[i] = Math.floor(Math.random() * 10) + post.images[i];
-	//     }
-
-	//     fs.writeFileSync("db/img/" + post.images[i], Buffer.from(base64Parts[i], "base64"));
-	// }
-
-	// db.threads[threadID].posts.push(
-	//     {
-	//         "message": post.message,
-	//         "images": post.images,
-	//         "unixtime": Date.now()
-	//     }
-	// );
 }
 
 module.exports = {
